@@ -1,0 +1,6 @@
+@AutoTrading.Api_HostAddress = http://localhost:5122
+
+GET {{AutoTrading.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
