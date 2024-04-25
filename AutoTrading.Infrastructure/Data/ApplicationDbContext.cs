@@ -7,7 +7,9 @@ namespace AutoTrading.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    {
+    }
 
     public DbSet<User> Users => Set<User>();
 
@@ -21,6 +23,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<AccountDetail> AccountDetails => Set<AccountDetail>();
 
     public DbSet<Account> Accounts => Set<Account>();
+
+    public DbSet<UserRole> UserRoles => Set<UserRole>();
+
+    public DbSet<Role> Roles => Set<Role>();
 
 
     protected override void OnModelCreating(ModelBuilder builder)

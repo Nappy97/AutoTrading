@@ -34,7 +34,6 @@ public class UpdateSoldAccountDetailCommandHandler : IRequestHandler<UpdateSoldA
         entity.SoldAt = request.SoledAt;
         
         // TODO: 해당 코드표 추가 후 수정
-        // TODO: 2024 04 23 Validator 작성해야함
         //entity.TradeCode = "매도";
         entity.Profit = entity.SoldQuantity * entity.SoldQuantity - entity.SoldPrice * entity.SoldQuantity;
 

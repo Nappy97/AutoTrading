@@ -17,5 +17,9 @@ public interface IApplicationDbContext
 
     DbSet<Account> Accounts { get; }
 
+    DbSet<UserRole> UserRoles { get; }
+
+    DbSet<Role> Roles { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

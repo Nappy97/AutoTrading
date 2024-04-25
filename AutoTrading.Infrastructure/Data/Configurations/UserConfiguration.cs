@@ -18,7 +18,15 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.UserName)
             .IsUnique();
 
-        builder.Property(u => u.Role)
+        builder.Property(u => u.LastLoggedAt)
+            .IsRequired();
+
+        builder.Property(u => u.Name)
+            .HasMaxLength(10)
+            .IsRequired();
+
+        builder.Property(u => u.AccessFailedCount)
+            .HasDefaultValue(0)
             .IsRequired();
     }
 }
