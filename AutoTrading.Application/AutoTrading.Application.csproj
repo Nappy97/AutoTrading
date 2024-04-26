@@ -15,14 +15,6 @@
 
     <ItemGroup>
         <Folder Include="Common\Routins\" />
-        <Folder Include="Roles\Commands\CreateRole\" />
-        <Folder Include="Roles\Commands\DeleteRole\" />
-        <Folder Include="Roles\Commands\UpdateRole\" />
-        <Folder Include="Roles\EventHandlers\" />
-        <Folder Include="UserRoles\Commands\CreateUserRole\" />
-        <Folder Include="UserRoles\Commands\DeleteUserRole\" />
-        <Folder Include="UserRoles\Commands\UpdateUserRole\" />
-        <Folder Include="UserRoles\EventHandlers\" />
         <Folder Include="UserRoles\Queries\" />
         <Folder Include="Users\Commands\DeleteUser\"/>
         <Folder Include="Users\Commands\UpdateUser\"/>

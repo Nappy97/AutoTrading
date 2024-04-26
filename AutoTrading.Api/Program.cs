@@ -1,3 +1,6 @@
+using AutoTrading.Application;
+using AutoTrading.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services to the container.

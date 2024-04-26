@@ -4,7 +4,6 @@ public class GetRolesWithPaginationQueryValidator : AbstractValidator<GetRolesWi
 {
     public GetRolesWithPaginationQueryValidator()
     {
-        // TODO : 2024 04 25 Roles command 작성
         RuleFor(x => x.PageNumber)
             .GreaterThanOrEqualTo(1)
             .WithMessage("Page는 1보다 크거나 같아야 합니다.");

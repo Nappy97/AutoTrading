@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
 using AutoTrading.Application.Common.Behaviours;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace AutoTrading.Application;
 
 public static class DependencyInjection
 {
