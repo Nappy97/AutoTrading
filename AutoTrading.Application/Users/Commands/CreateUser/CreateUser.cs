@@ -9,7 +9,8 @@ public record CreateUserCommand : IRequest<long>
     public string? UserName { get; init; }
 
     public string? Password { get; init; }
-    //public string? Role { get; set; }
+
+    public string? Name { get; init; }
 }
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, long>
@@ -27,7 +28,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, long>
         {
             UserName = request.UserName,
             Password = request.Password,
-            // Role = request.Role
+            Name = request.Name
         };
 
         _context.Users.Add(entity);
