@@ -2,23 +2,23 @@
 
 namespace AutoTrading.Application.Users.Commands.UpdateUser.ChangeUserInformation;
 
-public record UpdateUserCommand : IRequest
+public record UpdateUserInformationCommand : IRequest
 {
     public long Id { get; init; }
 
     public string? Name { get; init; }
 }
 
-public class UpdateUser : IRequestHandler<UpdateUserCommand>
+public class UpdateUserInformationCommandHandler : IRequestHandler<UpdateUserInformationCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public UpdateUser(IApplicationDbContext context)
+    public UpdateUserInformationCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateUserInformationCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Users
             .FindAsync([request.Id], cancellationToken);

@@ -15,8 +15,6 @@
 
     <ItemGroup>
         <Folder Include="Common\Routins\" />
-        <Folder Include="Users\Commands\UpdateUser\ChangePassword\" />
-        <Folder Include="Users\EventHandlers\"/>
         <Folder Include="Users\Queries\"/>
     </ItemGroup>
 

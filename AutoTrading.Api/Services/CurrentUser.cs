@@ -13,5 +13,5 @@ public class CurrentUser : User
     }
 
     // public long Id => _httpContextAccessor.HttpContext?.User?.FindFirstValue();
-    public long Id => long.Parse(_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier));
+    public long Id => long.Parse(_httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier));
 }

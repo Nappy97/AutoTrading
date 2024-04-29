@@ -12,7 +12,8 @@ public class CreateAccountDetailCommandValidator : AbstractValidator<CreateAccou
 
         RuleFor(a => a.AccountId)
             .NotEmpty()
-            .MustAsync(async (a, accountId, cancellationToken) => await IsOwnAccount(a.UserId, accountId, cancellationToken))
+            .MustAsync(async (a, accountId, cancellationToken) 
+                => await IsOwnAccount(a.UserId, accountId, cancellationToken))
             .WithMessage("'{PropertyName}'은 해당 유저의 계좌가 아닙니다.");
 
         RuleFor(a => a.AccountId)

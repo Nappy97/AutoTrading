@@ -48,4 +48,5 @@ public class CreateAccountDetailCommandHandler : IRequestHandler<CreateAccountDe
 
         return entity.Id;
     }
+
 }

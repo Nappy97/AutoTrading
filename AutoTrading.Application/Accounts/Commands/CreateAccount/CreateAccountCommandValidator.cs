@@ -1,8 +1,8 @@
 ﻿namespace AutoTrading.Application.Accounts.Commands.CreateAccount;
 
-public class CreateTodoItemCommandValidator : AbstractValidator<CreateAccountCommand>
+public class CreateAccountCommandValidator : AbstractValidator<CreateAccountCommand>
 {
-    public CreateTodoItemCommandValidator()
+    public CreateAccountCommandValidator()
     {
         RuleFor(v => v.UserId)
             .NotEmpty();
