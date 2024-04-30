@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,12 +13,15 @@
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.4"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.4"/>
         <PackageReference Include="NSwag.AspNetCore" Version="14.0.7"/>
         <PackageReference Include="NSwag.MSBuild" Version="14.0.7">
-            <PrivateAssets>all</PrivateAssets>
+<!--            <PrivateAssets>all</PrivateAssets>-->
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
@@ -25,6 +29,7 @@
 
     <ItemGroup>
         <Folder Include="Pages\"/>
+        <Folder Include="wwwroot\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -37,14 +42,15 @@
         <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     </PropertyGroup>
 
-    <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' And '$(SkipNSwag)' != 'True' ">
+
+<!--    <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' And '$(SkipNSwag)' != 'True' ">
         <Exec ConsoleToMSBuild="true" ContinueOnError="true" WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net80) run config.nswag /variables:Configuration=$(Configuration)">
             <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode"/>
             <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput"/>
         </Exec>
 
-        <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low"/>
-<!--        <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'"/>-->
-    </Target>
+&lt;!&ndash;        <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low"/>&ndash;&gt;
+&lt;!&ndash;        <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'"/>&ndash;&gt;
+    </Target>-->
 
 </Project>

@@ -16,7 +16,8 @@ public class CodeConfiguration : IEntityTypeConfiguration<Code>
         builder.Property(c => c.Enabled)
             .HasComment("사용 여부");
 
-        builder.Property("코드 카테고리 ID")
+        builder.Property(c => c.CodeCategoryId)
+            .HasComment("코드 카테고리 ID")
             .IsRequired();
     }
 }

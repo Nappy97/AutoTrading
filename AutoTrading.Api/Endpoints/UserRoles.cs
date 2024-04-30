@@ -10,7 +10,11 @@ public class UserRoles : EndpointGroupBase
 {
     public override void Map(WebApplication app)
     {
-        throw new NotImplementedException();
+        app.MapGroup(this)
+            .MapGet(GetUserRolesWithPagination)
+            .MapPost(CreateUserRole)
+            .MapPut(UpdateUserRole, "{userId}/{roleId}")
+            .MapDelete(DeleteUserRole, "{userId}/{roleID}");
     }
 
     private Task<PaginatedList<UserRolesBriefDto>> GetUserRolesWithPagination(ISender sender,

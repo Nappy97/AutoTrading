@@ -1,4 +1,5 @@
-﻿using AutoTrading.Domain.Common;
+﻿using AutoTrading.Application.Common.Interfaces;
+using AutoTrading.Domain.Common;
 using AutoTrading.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -8,10 +9,10 @@ namespace AutoTrading.Infrastructure.Data.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
-    private readonly User _user;
+    private readonly IUser _user;
     private readonly TimeProvider _dateTime;
 
-    public AuditableEntityInterceptor(User user, TimeProvider dateTime)
+    public AuditableEntityInterceptor(IUser user, TimeProvider dateTime)
     {
         _user = user;
         _dateTime = dateTime;

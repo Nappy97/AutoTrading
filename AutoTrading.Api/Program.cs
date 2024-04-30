@@ -1,13 +1,14 @@
+using AutoTrading.Api;
 using AutoTrading.Application;
 using AutoTrading.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services to the container.
-//builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
+builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-// builder.Services.AddWebServices();
+builder.Services.AddWebServices();
 
 var app = builder.Build();
 

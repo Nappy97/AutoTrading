@@ -3,9 +3,9 @@
 [TestFixture]
 public abstract class BaseTestFixture
 {
-    [SetUp]
+    /*[SetUp]
     public async Task TestSetUp()
     {
         await ResetState();
-    }
+    }*/
 }

@@ -1,5 +1,6 @@
 ﻿using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Domain.Constants;
+using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
 using AutoTrading.Infrastructure.Data.Interceptors;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +18,6 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
@@ -31,7 +31,7 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
-
+        
         services.AddScoped<ApplicationDbContextInitializer>();
 
         services.AddAuthentication()
@@ -40,10 +40,10 @@ public static class DependencyInjection
         services.AddAuthorizationBuilder();
 
         // services
-        //     .AddIdentityCore<User>()
-        //     .AddRoles<IdentityRole>()
-        //     .AddEntityFrameworkStores<ApplicationDbContext>()
-        //     .AddApiEndpoints();
+            // .AddIdentityCore<User>()
+            // .AddRoles<Role>()
+            // .AddEntityFrameworkStores<ApplicationDbContext>()
+            // .AddApiEndpoints();
 
         services.AddSingleton(TimeProvider.System);
         //services.AddTransient<IIdentityService, IdentityService>();

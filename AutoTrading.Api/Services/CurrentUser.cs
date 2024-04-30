@@ -1,9 +1,10 @@
 ﻿using System.Security.Claims;
+using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Domain.Entities;
 
 namespace AutoTrading.Api.Services;
 
-public class CurrentUser : User
+public class CurrentUser : IUser
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 

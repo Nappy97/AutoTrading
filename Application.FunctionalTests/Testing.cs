@@ -5,7 +5,7 @@ namespace Application.FunctionalTests;
 [SetUpFixture]
 public partial class Testing
 {
-    private static ITestDatabase _database;
+    /*private static ITestDatabase _database;
     private static CustomWebApplicationFactory _factory = null!;
     private static IServiceScopeFactory _scopeFactory = null!;
     private static long _userId;
@@ -18,5 +18,5 @@ public partial class Testing
         _factory = new CustomWebApplicationFactory(_database.GetConnection());
         
         _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
-    }
+    }*/
 }

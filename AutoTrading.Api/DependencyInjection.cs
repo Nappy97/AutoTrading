@@ -1,4 +1,6 @@
-﻿using AutoTrading.Infrastructure.Data;
+﻿using AutoTrading.Api.Services;
+using AutoTrading.Application.Common.Interfaces;
+using AutoTrading.Infrastructure.Data;
 using Azure.Identity;
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -11,7 +13,7 @@ public static class DependencyInjection
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        //services.AddScoped<User>()
+        services.AddScoped<IUser, CurrentUser>();
 
         services.AddHttpContextAccessor();
 
