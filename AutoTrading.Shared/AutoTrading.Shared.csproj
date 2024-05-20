@@ -9,6 +9,7 @@
     <ItemGroup>
       <Folder Include="Attributes\" />
       <Folder Include="Extensions\" />
+      <Folder Include="Generated\" />
       <Folder Include="Utilities\" />
     </ItemGroup>
 </Project>

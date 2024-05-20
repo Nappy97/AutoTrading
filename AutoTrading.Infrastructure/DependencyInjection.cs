@@ -1,6 +1,5 @@
 ﻿using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Domain.Constants;
-using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
 using AutoTrading.Infrastructure.Data.Interceptors;
 using Microsoft.AspNetCore.Identity;

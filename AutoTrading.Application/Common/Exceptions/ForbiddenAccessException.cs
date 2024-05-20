@@ -1,6 +1,6 @@
 ﻿namespace AutoTrading.Application.Common.Exceptions;
 
-public class ForbiddenAccessException
+public class ForbiddenAccessException : Exception
 {
     
 }
