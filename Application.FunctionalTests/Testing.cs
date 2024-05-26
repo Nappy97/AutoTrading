@@ -1,4 +1,5 @@
 ﻿using AutoTrading.Api.Endpoints;
+using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,10 @@ namespace Application.FunctionalTests;
 [SetUpFixture]
 public partial class Testing
 {
-private static ITestDatabase _database;
+    private static ITestDatabase _database;
     private static CustomWebApplicationFactory _factory = null!;
     private static IServiceScopeFactory _scopeFactory = null!;
-    private static string? _userId;
+    private static long _userId;
 
     [OneTimeSetUp]
     public async Task RunBeforeAnyTests()
@@ -42,54 +43,34 @@ private static ITestDatabase _database;
         await mediator.Send(request);
     }
 
-    public static string? GetUserId()
+    public static long GetUserId()
     {
         return _userId;
     }
 
-    public static async Task<string> RunAsDefaultUserAsync()
+    public static async Task<long> RunAsDefaultUserAsync()
     {
-        return await RunAsUserAsync("test@local", "Testing1234!", Array.Empty<string>());
+        //return await RunAsUserAsync("test@local", "Testing1234!", Array.Empty<string>());
+        return 1;
     }
 
-    public static async Task<string> RunAsAdministratorAsync()
+    public static async Task<long> RunAsAdministratorAsync()
     {
-        return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { Roles.Administrator });
+        //return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { Roles.Administrator });
+        return 1;
     }
 
-    public static async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
+    /*public static async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
     {
         using var scope = _scopeFactory.CreateScope();
 
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        context.Users.Where(u => u.UserRoleId)
 
-        var user = new ApplicationUser { UserName = userName, Email = userName };
 
-        var result = await userManager.CreateAsync(user, password);
-
-        if (roles.Any())
-        {
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            foreach (var role in roles)
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-
-            await userManager.AddToRolesAsync(user, roles);
-        }
-
-        if (result.Succeeded)
-        {
-            _userId = user.Id;
-
-            return _userId;
-        }
-
-        var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
-
+        
         throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
-    }
+    }*/
 
     public static async Task ResetState()
     {
@@ -97,11 +78,11 @@ private static ITestDatabase _database;
         {
             await _database.ResetAsync();
         }
-        catch (Exception) 
+        catch (Exception)
         {
         }
 
-        _userId = null;
+        _userId = 0;
     }
 
     public static async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues)

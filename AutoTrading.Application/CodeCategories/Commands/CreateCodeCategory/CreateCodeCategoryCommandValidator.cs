@@ -6,7 +6,7 @@ public class CreateCodeCategoryCommandValidator : AbstractValidator<CreateCodeCa
     {
         RuleFor(v => v.CodeCategoryId)
             .GreaterThanOrEqualTo(0)
-            .NotEmpty();
+            .NotNull();
 
         RuleFor(v => v.Text)
             .MaximumLength(50)
