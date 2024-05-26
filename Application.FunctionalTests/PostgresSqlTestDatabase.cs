@@ -2,31 +2,33 @@
 using AutoTrading.Infrastructure.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Respawn;
-using Testcontainers.PostgreSql;
 
 namespace Application.FunctionalTests;
 
-public class TestcontainersTestDatabase
+public class PostgresSqlTestDatabase : ITestDatabase
 {
-    private readonly PostgreSqlContainer _container;
-    private DbConnection _connection = null!;
-    private string _connectionString = null!;
+    private readonly string _connectionString = null!;
+    private SqlConnection _connection = null!;
     private Respawner _respawner = null!;
 
-    public TestcontainersTestDatabase()
+    public PostgresSqlTestDatabase()
     {
-        _container = new PostgreSqlBuilder()
-            .WithAutoRemove(true)
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
             .Build();
+
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        Guard.Against.Null(connectionString);
+
+        _connectionString = connectionString;
     }
 
     public async Task InitializeAsync()
     {
-        await _container.StartAsync();
-
-        _connectionString = _container.GetConnectionString();
-
         _connection = new SqlConnection(_connectionString);
 
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -39,7 +41,7 @@ public class TestcontainersTestDatabase
 
         _respawner = await Respawner.CreateAsync(_connectionString, new RespawnerOptions
         {
-            TablesToIgnore = new Respawn.Graph.Table[] { "__EFMigrationsHistory" }
+            TablesToIgnore = ["__EFMigrationsHistory"]
         });
     }
 
@@ -56,6 +58,5 @@ public class TestcontainersTestDatabase
     public async Task DisposeAsync()
     {
         await _connection.DisposeAsync();
-        await _container.DisposeAsync();
     }
 }

@@ -20,7 +20,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         _connection = connection;
     }
 
-    /*protected override void ConfigureWebHost(IWebHostBuilder builder)
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureTestServices(services =>
         {
@@ -33,8 +33,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 .AddDbContext<ApplicationDbContext>(((sp, options) =>
                 {
                     options.AddInterceptors(sp.GetService<ISaveChangesInterceptor>());
-                    options.UseSqlServer(_connection);
+                    options.UseNpgsql(_connection);
                 }));
         });
-    }*/
+    }
 }

@@ -1,7 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using AutoMapper;
+using AutoTrading.Application.AccountDetails.Queries.GetAccountDetailsWithPagination;
+using AutoTrading.Application.Accounts.Queries.GetAccountDetails;
+using AutoTrading.Application.CodeCategories.Queries.GetCodes;
+using AutoTrading.Application.Codes.Queries.GetCodesWithPagination;
 using AutoTrading.Application.Common.Interfaces;
+using AutoTrading.Application.Roles.Queries.GetRolesWithPagination;
+using AutoTrading.Application.Roles.Queries.GetUserRoles;
+using AutoTrading.Application.Stocks.Queries.GetStocksWithPagination;
+using AutoTrading.Application.UserRoles.Queries.GetUserRolesWithPagination;
+using AutoTrading.Domain.Entities;
 
 namespace Application.UnitTests.Common.Mappings;
 
@@ -24,18 +33,25 @@ public class MappingTests
         _configuration.AssertConfigurationIsValid();
     }
     
-    // [Test]
-    // [TestCase(typeof(TodoList), typeof(TodoListDto))]
-    // [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
-    // [TestCase(typeof(TodoList), typeof(LookupDto))]
-    // [TestCase(typeof(TodoItem), typeof(LookupDto))]
-    // [TestCase(typeof(TodoItem), typeof(TodoItemBriefDto))]
-    // public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
-    // {
-    //     var instance = GetInstanceOf(source);
-    //
-    //     _mapper.Map(instance, source, destination);
-    // }
+    [Test]
+    [TestCase(typeof(AccountDetail), typeof(AccountDetailBriefDto))]
+    [TestCase(typeof(AccountDetail), typeof(AccountDetailDto))]
+    [TestCase(typeof(Account), typeof(AccountDto))]
+    [TestCase(typeof(CodeCategory), typeof(CodeCategoryDto))]
+    [TestCase(typeof(Code), typeof(CodeDto))]
+    [TestCase(typeof(Code), typeof(CodeBriefDto))]
+    [TestCase(typeof(Role), typeof(RoleBriefDto))]
+    [TestCase(typeof(Role), typeof(RoleBriefDto))]
+    [TestCase(typeof(Role), typeof(RoleDto))]
+    [TestCase(typeof(UserRole), typeof(UserRoleDto))]
+    [TestCase(typeof(Stock), typeof(StockBriefDto))]
+    [TestCase(typeof(UserRole), typeof(UserRolesBriefDto))]
+    public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
+    {
+        var instance = GetInstanceOf(source);
+    
+        _mapper.Map(instance, source, destination);
+    }
 
     private object GetInstanceOf(Type type)
     {

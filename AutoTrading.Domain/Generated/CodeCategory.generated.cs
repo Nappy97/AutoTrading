@@ -1,6 +1,6 @@
-// 이 파일은 [2024-05-26 오후 5:24:07]에 도구에 의해 생성된 파일입니다.
+// 이 파일은 [2024-05-26 오후 5:30:07]에 도구에 의해 생성된 파일입니다.
 
-namespace AutoTrading.Shared;
+namespace AutoTrading.Domain.Generated;
 
     public partial class CodeCategory
     {

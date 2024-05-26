@@ -23,7 +23,7 @@ public abstract class BaseConstantGenerator<T> : ConstantGenerator
     protected virtual string BuildPrimaryLine(T item) => $"public const int {GetLiteral(item)} = {GetValue(item)};";
     protected virtual string BuildSecondaryLine(T item) => string.Empty;
     protected virtual string BuildTernaryLine(T item) => string.Empty;
-    private string PathToWrite => @$"d:\SideProject\Stock\AutoTrading\AutoTrading.Shared\Generated\{EntityName}.generated.cs";
+    private string PathToWrite => @$"d:\SideProject\Stock\AutoTrading\AutoTrading.Domain\Generated\{EntityName}.generated.cs";
 
     protected ApplicationDbContext _context => Program.AddDbContext();
 
@@ -53,7 +53,7 @@ public abstract class BaseConstantGenerator<T> : ConstantGenerator
             string content = $$"""
                                // 이 파일은 [{{DateTime.Now}}]에 도구에 의해 생성된 파일입니다.
 
-                               namespace AutoTrading.Shared;
+                               namespace AutoTrading.Domain.Generated;
                                
                                    public partial class {{EntityName}}
                                    {

@@ -1,9 +1,9 @@
-namespace AutoTrading.Shared;
+namespace AutoTrading.Domain.Generated;
 
 public class E
 {
-public enum 토큰분류
-{ 
+    public enum 토큰분류
+{
         KisToken = 1000,
 }public enum 마켓분류
 {

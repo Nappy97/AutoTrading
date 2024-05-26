@@ -9,10 +9,10 @@ namespace AutoTrading.Tool;
 
 public class EnumGeneratorRunner : ITool
 {
-    public string PathToWrite => @"d:\SideProject\Stock\AutoTrading\AutoTrading.Shared\Generated\E.generated.cs";
+    public string PathToWrite => @"d:\SideProject\Stock\AutoTrading\AutoTrading.Domain\Generated\E.generated.cs";
 
     public const string OuterTemplate = """
-                                        namespace AutoTrading.Shared;
+                                        namespace AutoTrading.Domain.Generated;
                                         
                                         public class E
                                         {{
