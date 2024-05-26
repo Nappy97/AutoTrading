@@ -4,8 +4,8 @@ namespace AutoTrading.Application.CodeCategories.Queries.GetCodes;
 
 public class CodeDto
 {
-    public long Id { get; init; }
-    public long CodeCategoryId { get; init; }
+    public int CodeId { get; init; }
+    public int CodeCategoryId { get; init; }
     public string? Text { get; init; }
     public bool Enabled { get; init; }
     public string? Memo { get; init; }

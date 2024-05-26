@@ -23,21 +23,21 @@ public class Codes : EndpointGroupBase
         return sender.Send(query);
     }
 
-    private Task<long> CreateCode(ISender sender, CreateCodeCommand command)
+    private Task<int> CreateCode(ISender sender, CreateCodeCommand command)
     {
         return sender.Send(command);
     }
 
     private async Task<IResult> UpdateCode(ISender sender, long id, UpdateCodeCommand command)
     {
-        if (id != command.Id)
+        if (id != command.CodeId)
             return Results.BadRequest();
 
         await sender.Send(command);
         return Results.NoContent();
     }
 
-    private async Task<IResult> DeleteCode(ISender sender, long id)
+    private async Task<IResult> DeleteCode(ISender sender, int id)
     {
         await sender.Send(new DeleteCodeCommand(id));
         return Results.NoContent();

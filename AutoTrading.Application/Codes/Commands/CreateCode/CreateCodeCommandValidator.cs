@@ -4,7 +4,7 @@ public class CreateCodeCommandValidator : AbstractValidator<CreateCodeCommand>
 {
     public CreateCodeCommandValidator()
     {
-        RuleFor(v => v.Id)
+        RuleFor(v => v.CodeId)
             .GreaterThanOrEqualTo(0)
             .NotEmpty();
 

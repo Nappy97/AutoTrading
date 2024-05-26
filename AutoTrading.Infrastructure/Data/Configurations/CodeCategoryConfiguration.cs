@@ -8,10 +8,15 @@ public class CodeCategoryConfiguration : IEntityTypeConfiguration<CodeCategory>
 {
     public void Configure(EntityTypeBuilder<CodeCategory> builder)
     {
-        builder.Property(c => c.Id)
+        builder.Ignore(c => c.Id);
+
+        builder.HasKey(c => c.CodeCategoryId);
+
+        builder.Property(c => c.CodeCategoryId)
             .ValueGeneratedNever();
 
         builder.Property(c => c.Text)
+            .HasDefaultValue(string.Empty)
             .IsRequired()
             .HasMaxLength(50)
             .HasComment("코드 카테고리 설명");

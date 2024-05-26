@@ -10,9 +10,9 @@ internal class CodeCategoryConstantGenerator : BaseConstantGenerator<CodeCategor
 {
     protected override string EntityName => nameof(CodeCategory);
 
-    protected override List<CodeCategory> Load() => _context.CodeCategories.Where(x => x.Id != 0).ToList();
+    protected override List<CodeCategory> Load() => _context.CodeCategories.Where(x => x.CodeCategoryId != 0).ToList();
 
-    protected override string GetLiteral(CodeCategory item) => $"{item.Text.Clean()}_{item.Id}";
+    protected override string GetLiteral(CodeCategory item) => $"{item.Text.Clean()}_{item.CodeCategoryId}";
 
-    protected override string GetValue(CodeCategory item) => $"{item.Id}";
+    protected override string GetValue(CodeCategory item) => $"{item.CodeCategoryId}";
 }

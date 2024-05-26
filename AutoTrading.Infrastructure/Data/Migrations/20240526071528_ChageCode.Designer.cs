@@ -3,6 +3,7 @@ using System;
 using AutoTrading.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AutoTrading.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526071528_ChageCode")]
+    partial class ChageCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,11 +155,7 @@ namespace AutoTrading.Infrastructure.Data.Migrations
                         .HasComment("사용 여부");
 
                     b.Property<string>("Memo")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasDefaultValue("");
+                        .HasColumnType("text");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -226,9 +225,7 @@ namespace AutoTrading.Infrastructure.Data.Migrations
 
                     b.Property<string>("Memo")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
-                        .HasDefaultValue("")
                         .HasComment("특이사항");
 
                     b.Property<string>("Name")

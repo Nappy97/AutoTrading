@@ -1,6 +1,7 @@
 using AutoTrading.Api;
 using AutoTrading.Application;
 using AutoTrading.Infrastructure;
+using AutoTrading.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // await app.InitialiseDatabaseAsync();
+    //await app.InitializeDatabaseAsync();
 }
 else
 {

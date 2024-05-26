@@ -11,13 +11,13 @@ internal class CodeConstantGenerator : BaseConstantGenerator<Code>
     protected override string EntityName => "C";
 
     protected override List<Code> Load() 
-        => _context.Codes.Where(x => x.Id != 0).ToList();
+        => _context.Codes.Where(x => x.CodeId != 0).ToList();
 
     protected override string GetLiteral(Code item)
     {
-        long prefix = item.Id / 100;
+        long prefix = item.CodeId / 100;
         return $"_{prefix}_{item.Text.Clean()}";
     }
 
-    protected override string GetValue(Code item) => $"{item.Id}";
+    protected override string GetValue(Code item) => $"{item.CodeId}";
 }

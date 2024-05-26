@@ -4,7 +4,7 @@ public class CreateCodeCategoryCommandValidator : AbstractValidator<CreateCodeCa
 {
     public CreateCodeCategoryCommandValidator()
     {
-        RuleFor(v => v.Id)
+        RuleFor(v => v.CodeCategoryId)
             .GreaterThanOrEqualTo(0)
             .NotEmpty();
 

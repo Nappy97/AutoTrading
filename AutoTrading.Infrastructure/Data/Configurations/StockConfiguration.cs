@@ -34,6 +34,7 @@ public class StockConfiguration : IEntityTypeConfiguration<Stock>
 
         builder.Property(s => s.Memo)
             .IsRequired()
+            .HasDefaultValue(string.Empty)
             .HasComment("특이사항");
     }
 }

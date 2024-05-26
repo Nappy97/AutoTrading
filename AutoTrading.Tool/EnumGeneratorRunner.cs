@@ -45,13 +45,13 @@ public class EnumGeneratorRunner : ITool
         
         StringBuilder categoryBuilder = new();
 
-        foreach (var category in _categories.Where(x => x.Id != 0))
+        foreach (var category in _categories.Where(x => x.CodeCategoryId != 0))
         {
             StringBuilder codeBuilder = new();
 
-            var codes = _codes.FindAll(x => x.CodeCategoryId == category.Id);
+            var codes = _codes.FindAll(x => x.CodeCategoryId == category.CodeCategoryId);
             foreach (var code in codes)
-                codeBuilder.AppendFormat(CodeTemplate, code.Text.Clean(), code.Id);
+                codeBuilder.AppendFormat(CodeTemplate, code.Text.Clean(), code.CodeId);
 
             categoryBuilder.AppendFormat(CategoryTemplate, category.Text.Clean(), codeBuilder);
         }

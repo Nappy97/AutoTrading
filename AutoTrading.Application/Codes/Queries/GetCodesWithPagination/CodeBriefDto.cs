@@ -4,9 +4,9 @@ namespace AutoTrading.Application.Codes.Queries.GetCodesWithPagination;
 
 public class CodeBriefDto
 {
-    public long Id { get; init; }
+    public int CodeId { get; init; }
 
-    public long CodeCategoryId { get; init; }
+    public int CodeCategoryId { get; init; }
 
     public string? Text { get; init; }
 

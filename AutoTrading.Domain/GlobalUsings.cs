@@ -9,4 +9,3 @@ global using AutoTrading.Domain.Events.AccountEvents;
 global using AutoTrading.Domain.Events.AccountDetailEvents;
 global using AutoTrading.Domain.Events.StockEvents;
 global using AutoTrading.Domain.Exceptions;
-global using AutoTrading.Domain.ValueObjects;

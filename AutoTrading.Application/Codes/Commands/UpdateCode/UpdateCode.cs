@@ -4,7 +4,7 @@ namespace AutoTrading.Application.Codes.Commands.UpdateCode;
 
 public record UpdateCodeCommand : IRequest
 {
-    public long Id { get; init; }
+    public int CodeId { get; init; }
 
     public string? Text { get; init; }
 
@@ -23,9 +23,9 @@ public class UpdateCodeCommandHandler : IRequestHandler<UpdateCodeCommand>
     public async Task Handle(UpdateCodeCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Codes
-            .FindAsync([request.Id], cancellationToken);
+            .FindAsync([request.CodeId], cancellationToken);
 
-        Guard.Against.NotFound(request.Id, entity);
+        Guard.Against.NotFound(request.CodeId, entity);
 
         entity.Text = request.Text;
         entity.Enabled = request.Enabled;

@@ -4,7 +4,7 @@ namespace AutoTrading.Application.CodeCategories.Commands.UpdateCodeCategory;
 
 public record UpdateCodeCategoryCommand : IRequest 
 {
-    public long Id { get; init; }
+    public int CodeCategoryId { get; init; }
 
     public string? Text { get; set; }
 }
@@ -21,9 +21,9 @@ public class UpdateCodeCategoryCommandHandler : IRequestHandler<UpdateCodeCatego
     public async Task Handle(UpdateCodeCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.CodeCategories
-            .FindAsync([request.Id], cancellationToken);
+            .FindAsync([request.CodeCategoryId], cancellationToken);
 
-        Guard.Against.NotFound(request.Id, entity);
+        Guard.Against.NotFound(request.CodeCategoryId, entity);
 
         entity.Text = request.Text;
 

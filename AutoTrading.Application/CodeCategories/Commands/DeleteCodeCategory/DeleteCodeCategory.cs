@@ -3,7 +3,7 @@ using AutoTrading.Domain.Events.CodeCategoryEvents;
 
 namespace AutoTrading.Application.CodeCategories.Commands.DeleteCodeCategory;
 
-public record DeleteCodeCategoryCommand(long Id) : IRequest;
+public record DeleteCodeCategoryCommand(int CodeCategoryId) : IRequest;
 
 public class DeleteCodeCategoryCommandHandler : IRequestHandler<DeleteCodeCategoryCommand>
 {
@@ -17,9 +17,9 @@ public class DeleteCodeCategoryCommandHandler : IRequestHandler<DeleteCodeCatego
     public async Task Handle(DeleteCodeCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.CodeCategories
-            .FindAsync([request.Id], cancellationToken);
+            .FindAsync([request.CodeCategoryId], cancellationToken);
 
-        Guard.Against.NotFound(request.Id, entity);
+        Guard.Against.NotFound(request.CodeCategoryId, entity);
 
         _context.CodeCategories.Remove(entity);
 

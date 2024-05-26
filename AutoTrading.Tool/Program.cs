@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using AutoTrading.Infrastructure.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -16,7 +17,7 @@ internal static class Program
 
         return new ApplicationDbContext(options);
     }
-    
+
     private static IConfiguration GetConfiguration()
     {
         var builder = new ConfigurationBuilder()
@@ -30,6 +31,7 @@ internal static class Program
 
         return builder.Build();
     }
+
     private static void Main(string[] args)
     {
         var tools = CreateToolInstances();
@@ -62,8 +64,7 @@ internal static class Program
             if (typeof(ITool).IsAssignableFrom(type) is false)
                 continue;
 
-            var instance = Activator.CreateInstance(type) as ITool;
-            if (instance != null)
+            if (Activator.CreateInstance(type) is ITool instance)
                 instances.Add(instance);
         }
 

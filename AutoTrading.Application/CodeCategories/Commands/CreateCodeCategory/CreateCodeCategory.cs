@@ -1,16 +1,16 @@
-﻿using AutoTrading.Application.Common.Interfaces;
+using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Domain.Entities;
 using AutoTrading.Domain.Events.CodeCategoryEvents;
 
 namespace AutoTrading.Application.CodeCategories.Commands.CreateCodeCategory;
 
-public record CreateCodeCategoryCommand : IRequest<long>
+public record CreateCodeCategoryCommand : IRequest<int>
 {
-    public long Id { get; init; }
+    public int CodeCategoryId { get; init; }
     public string? Text { get; init; }
 }
 
-public class CreateCodeCategoryCommandHandler : IRequestHandler<CreateCodeCategoryCommand, long>
+public class CreateCodeCategoryCommandHandler : IRequestHandler<CreateCodeCategoryCommand, int>
 {
     private readonly IApplicationDbContext _context;
 
@@ -19,11 +19,11 @@ public class CreateCodeCategoryCommandHandler : IRequestHandler<CreateCodeCatego
         _context = context;
     }
 
-    public async Task<long> Handle(CreateCodeCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateCodeCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = new CodeCategory
         {
-            Id = request.Id,
+            CodeCategoryId = request.CodeCategoryId,
             Text = request.Text
         };
 
@@ -33,6 +33,6 @@ public class CreateCodeCategoryCommandHandler : IRequestHandler<CreateCodeCatego
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return entity.CodeCategoryId;
     }
 }

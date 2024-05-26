@@ -4,16 +4,16 @@ using AutoTrading.Domain.Events.CodeEvents;
 
 namespace AutoTrading.Application.Codes.Commands.CreateCode;
 
-public record CreateCodeCommand : IRequest<long>
+public record CreateCodeCommand : IRequest<int>
 {
-    public long Id { get; init; }
+    public int CodeId { get; init; }
 
     public string? Text { get; init; }
 
-    public long CodeCategoryId { get; init; }
+    public int CodeCategoryId { get; init; }
 }
 
-public class CreateCodeCommandHandler : IRequestHandler<CreateCodeCommand, long>
+public class CreateCodeCommandHandler : IRequestHandler<CreateCodeCommand, int>
 {
     private readonly IApplicationDbContext _context;
 
@@ -22,14 +22,13 @@ public class CreateCodeCommandHandler : IRequestHandler<CreateCodeCommand, long>
         _context = context;
     }
 
-    public async Task<long> Handle(CreateCodeCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateCodeCommand request, CancellationToken cancellationToken)
     {
         var entity = new Code
         {
-            Id = request.Id,
+            Id = request.CodeId,
             CodeCategoryId = request.CodeCategoryId,
             Text = request.Text
-            // TODO: Code Category 설명추가
         };
 
         entity.AddDomainEvent(new CodeCreatedEvent(entity));
@@ -38,6 +37,6 @@ public class CreateCodeCommandHandler : IRequestHandler<CreateCodeCommand, long>
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return entity.CodeId;
     }
 }

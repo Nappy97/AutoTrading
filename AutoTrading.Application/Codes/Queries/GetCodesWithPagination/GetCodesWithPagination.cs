@@ -6,7 +6,7 @@ namespace AutoTrading.Application.Codes.Queries.GetCodesWithPagination;
 
 public record GetCodesWithPaginationQuery : IRequest<PaginatedList<CodeBriefDto>>
 {
-    public long CodeCategoryId { get; init; }
+    public int CodeCategoryId { get; init; }
 
     public int PageNumber { get; init; } = 1;
 
@@ -30,7 +30,7 @@ public class
     {
         return await _context.Codes
             .Where(x => x.CodeCategoryId == request.CodeCategoryId)
-            .OrderBy(x => x.Id)
+            .OrderBy(x => x.CodeId)
             .ProjectTo<CodeBriefDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }

@@ -21,21 +21,21 @@ public class CodeCategories : EndpointGroupBase
         return sender.Send(new GetCodesQuery());
     }
 
-    private Task<long> CreateCodeCategory(ISender sender, CreateCodeCategoryCommand command)
+    private Task<int> CreateCodeCategory(ISender sender, CreateCodeCategoryCommand command)
     {
         return sender.Send(command);
     }
 
-    private async Task<IResult> UpdateCodeCategory(ISender sender, UpdateCodeCategoryCommand command, long id)
+    private async Task<IResult> UpdateCodeCategory(ISender sender, UpdateCodeCategoryCommand command, int id)
     {
-        if (id != command.Id)
+        if (id != command.CodeCategoryId)
             return Results.BadRequest();
 
         await sender.Send(command);
         return Results.NoContent();
     }
 
-    private async Task<IResult> DeleteCodeCategory(ISender sender, long id)
+    private async Task<IResult> DeleteCodeCategory(ISender sender, int id)
     {
         await sender.Send(new DeleteCodeCategoryCommand(id));
         return Results.NoContent();

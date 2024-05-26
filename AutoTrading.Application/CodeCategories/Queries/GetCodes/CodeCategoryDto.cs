@@ -9,7 +9,7 @@ public class CodeCategoryDto
         Items = Array.Empty<CodeDto>();
     }
 
-    public long Id { get; init; }
+    public long CodeCategoryId { get; init; }
     
     public string? Text { get; init; }
     

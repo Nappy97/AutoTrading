@@ -53,7 +53,7 @@ public abstract class BaseConstantGenerator<T> : ConstantGenerator
             string content = $$"""
                                // 이 파일은 [{{DateTime.Now}}]에 도구에 의해 생성된 파일입니다.
 
-                               namespace EasyRepick.Data;
+                               namespace AutoTrading.Shared;
                                
                                    public partial class {{EntityName}}
                                    {

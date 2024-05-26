@@ -24,7 +24,7 @@ public class GetCodesQueryHandler : IRequestHandler<GetCodesQuery, CodesVm>
             Lists = await _context.CodeCategories
                 .AsNoTracking()
                 .ProjectTo<CodeCategoryDto>(_mapper.ConfigurationProvider)
-                .OrderBy(t => t.Id)
+                .OrderBy(t => t.CodeCategoryId)
                 .ToListAsync(cancellationToken)
         };
     }

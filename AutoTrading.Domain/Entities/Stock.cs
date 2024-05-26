@@ -15,7 +15,7 @@ public class Stock : BaseEntity
     /// <summary>
     /// 자동매매 포함 여부
     /// </summary>
-    public bool Enabled { get; set; }
+    public bool Enabled { get; set; } = true;
 
     /// <summary>
     /// [11] 주식 상장 국가
