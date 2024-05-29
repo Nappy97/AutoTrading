@@ -1,4 +1,5 @@
 ﻿using AutoTrading.Domain.Entities;
+using Action = AutoTrading.Domain.Entities.Action;
 
 namespace AutoTrading.Application.Common.Interfaces;
 
@@ -20,6 +21,10 @@ public interface IApplicationDbContext
     DbSet<UserRole> UserRoles { get; }
 
     DbSet<Role> Roles { get; }
+    
+    DbSet<Action> Actions { get; }
+    
+    DbSet<ActionRole> ActionRoles { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
