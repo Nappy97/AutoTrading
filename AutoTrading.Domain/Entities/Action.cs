@@ -6,5 +6,5 @@ public class Action : BaseEntity
 
     public string? Memo { get; set; }
 
-    public ICollection<ActionRole> MenuRoles { get; set; } = new List<ActionRole>();
+    public ICollection<ActionRole> MenuRoles { get; private set; } = new List<ActionRole>();
 }

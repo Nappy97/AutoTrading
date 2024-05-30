@@ -4,14 +4,14 @@ using AutoTrading.Domain.Events.UserRoleEvents;
 
 namespace AutoTrading.Application.UserRoles.Commands.CreateUserRole;
 
-public record CreateUserRoleCommand : IRequest<long>
+public record CreateUserRoleCommand : IRequest<(long, long)>
 {
     public long UserId { get; init; }
 
     public long RoleId { get; init; }
 }
 
-public class CreateUserRoleCommandHandler : IRequestHandler<CreateUserRoleCommand, long>
+public class CreateUserRoleCommandHandler : IRequestHandler<CreateUserRoleCommand, (long, long)>
 {
     private readonly IApplicationDbContext _context;
 
@@ -20,7 +20,7 @@ public class CreateUserRoleCommandHandler : IRequestHandler<CreateUserRoleComman
         _context = context;
     }
     
-    public async Task<long> Handle(CreateUserRoleCommand request, CancellationToken cancellationToken)
+    public async Task<(long, long)> Handle(CreateUserRoleCommand request, CancellationToken cancellationToken)
     {
         var entity = new UserRole
         {
@@ -34,6 +34,6 @@ public class CreateUserRoleCommandHandler : IRequestHandler<CreateUserRoleComman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return (entity.UserId, entity.RoleId);
     }
 }

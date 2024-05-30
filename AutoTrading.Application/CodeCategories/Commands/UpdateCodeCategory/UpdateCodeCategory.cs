@@ -6,7 +6,7 @@ public record UpdateCodeCategoryCommand : IRequest
 {
     public int CodeCategoryId { get; init; }
 
-    public string? Text { get; set; }
+    public string? Text { get; init; }
 }
 
 public class UpdateCodeCategoryCommandHandler : IRequestHandler<UpdateCodeCategoryCommand>

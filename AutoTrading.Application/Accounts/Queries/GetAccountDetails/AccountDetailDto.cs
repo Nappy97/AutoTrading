@@ -22,7 +22,7 @@ public class AccountDetailDto
 
     public DateTime? SoldAt { get; init; }
 
-    public int Profit { get; set; }
+    public int Profit { get; init; }
     
     private class Mapping : Profile
     {

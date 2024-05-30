@@ -8,7 +8,7 @@ public record UpdateActionCommand : IRequest
 
     public string? Name { get; init; }
 
-    public string? Memo { get; set; }
+    public string? Memo { get; init; }
 }
 
 public class UpdateActionCommandHandler : IRequestHandler<UpdateActionCommand>

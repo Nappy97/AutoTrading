@@ -14,13 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="ActionRoles\Commands\CreateActionRole\" />
-        <Folder Include="ActionRoles\Commands\DeleteActionRole\" />
-        <Folder Include="ActionRoles\Commands\UpdateActionRole\" />
-        <Folder Include="ActionRoles\EventHandler\" />
-        <Folder Include="ActionRoles\Queries\" />
-        <Folder Include="Actions\EventHandler\" />
-        <Folder Include="Actions\Queries\" />
         <Folder Include="Common\Routins\" />
         <Folder Include="Users\Queries\"/>
     </ItemGroup>

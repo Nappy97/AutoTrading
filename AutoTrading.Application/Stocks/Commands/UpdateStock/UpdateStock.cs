@@ -6,7 +6,7 @@ public record UpdateStockCommand : IRequest
 {
     public long Id { get; init; }
     public bool Enabled { get; init; }
-    public string? Memo { get; set; }
+    public string? Memo { get; init; }
 }
 
 public class UpdateStockCommandHandler : IRequestHandler<UpdateStockCommand>

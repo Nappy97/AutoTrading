@@ -1,15 +1,15 @@
-﻿namespace AutoTrading.Application.UserRoles.Queries.GetUserRolesWithPagination;
+﻿namespace AutoTrading.Application.ActionRoles.Queries.GetActionRolesWithPagination;
 
-public class GetUserRolesWithPaginationQueryValidator : AbstractValidator<GetUserRolesWithPaginationQuery>
+public class GetActionRolesWithPaginationQueryValidator : AbstractValidator<GetActionRolesWithPaginationQuery>
 {
-    public GetUserRolesWithPaginationQueryValidator()
+    public GetActionRolesWithPaginationQueryValidator()
     {
-        RuleFor(x => x.UserId)
+        RuleFor(x => x.ActionId)
             .GreaterThanOrEqualTo(1);
 
         RuleFor(x => x.RoleId)
             .GreaterThanOrEqualTo(1);
-
+        
         RuleFor(x => x.PageNumber)
             .GreaterThanOrEqualTo(1)
             .WithMessage("Page는 1보다 크거나 같아야 합니다.");

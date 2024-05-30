@@ -4,7 +4,7 @@ namespace AutoTrading.Application.Accounts.Commands.UpdateAccount;
 
 public record UpdateAccountCommand : IRequest
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
 
     public bool Enabled { get; init; }
 
@@ -12,7 +12,7 @@ public record UpdateAccountCommand : IRequest
 
     public int CurrentAmount { get; init; }
 
-    public int CurrentCurrency { get; set; }
+    public int CurrentCurrency { get; init; }
 }
 
 public class UpdateAccountCommandHandler : IRequestHandler<UpdateAccountCommand>

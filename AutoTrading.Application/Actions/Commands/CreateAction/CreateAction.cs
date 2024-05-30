@@ -8,7 +8,7 @@ public record CreateActionCommand : IRequest<long>
 {
     public string? Name { get; init; }
 
-    public string? Memo { get; set; }
+    public string? Memo { get; init; }
 }
 
 public class CreateActionCommandHandler : IRequestHandler<CreateActionCommand, long>

@@ -5,9 +5,9 @@ namespace AutoTrading.Application.Roles.EventHandlers;
 
 public class RoleCreatedEventHandler : INotificationHandler<RoleCreatedEvent>
 {
-    private readonly ILogger<RoleCompletedEventHandler> _logger;
+    private readonly ILogger<RoleCreatedEventHandler> _logger;
 
-    public RoleCreatedEventHandler(ILogger<RoleCompletedEventHandler> logger)
+    public RoleCreatedEventHandler(ILogger<RoleCreatedEventHandler> logger)
     {
         _logger = logger;
     }

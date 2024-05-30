@@ -2,6 +2,7 @@
 using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Action = AutoTrading.Domain.Entities.Action;
 
 namespace AutoTrading.Infrastructure.Data;
 
@@ -27,6 +28,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<UserRole> UserRoles => Set<UserRole>();
 
     public DbSet<Role> Roles => Set<Role>();
+
+    public DbSet<ActionRole> ActionRoles => Set<ActionRole>();
+
+    public DbSet<Action> Actions => Set<Action>();
 
 
     protected override void OnModelCreating(ModelBuilder builder)
