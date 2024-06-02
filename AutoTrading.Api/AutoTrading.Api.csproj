@@ -35,6 +35,7 @@
     <ItemGroup>
         <ProjectReference Include="..\AutoTrading.Application\AutoTrading.Application.csproj" />
         <ProjectReference Include="..\AutoTrading.Infrastructure\AutoTrading.Infrastructure.csproj"/>
+        <ProjectReference Include="..\AutoTrading.Shared\AutoTrading.Shared.csproj" />
     </ItemGroup>
 
     <!-- Auto-generated Open API specification and Angular TypeScript clients -->

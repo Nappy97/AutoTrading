@@ -15,10 +15,10 @@
 
     <ItemGroup>
         <Folder Include="Common\Routins\" />
-        <Folder Include="Users\Queries\"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\AutoTrading.Domain\AutoTrading.Domain.csproj" />
+        <ProjectReference Include="..\AutoTrading.Shared\AutoTrading.Shared.csproj" />
     </ItemGroup>
 </Project>

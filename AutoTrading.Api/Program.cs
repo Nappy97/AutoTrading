@@ -1,4 +1,5 @@
 using AutoTrading.Api;
+using AutoTrading.Api.Utilities;
 using AutoTrading.Application;
 using AutoTrading.Infrastructure;
 using AutoTrading.Infrastructure.Data;
@@ -8,8 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add Services to the container.
 builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(AppSettings.Instance.AutoTrading.ConnectionString);
 builder.Services.AddWebServices();
+builder.Services.AddAuthentication(AppSettings.Instance.Jwt);
 
 var app = builder.Build();
 
@@ -44,6 +46,9 @@ app.MapFallbackToFile("index.html");
 app.UseExceptionHandler(options => { });
 
 app.Map("/", () => Results.Redirect("/api"));
+
+app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapEndPoints();
 

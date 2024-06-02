@@ -1,9 +1,12 @@
 ﻿using AutoTrading.Application.Common.Models;
+using AutoTrading.Domain.Entities;
 
 namespace AutoTrading.Application.Common.Interfaces;
 
 public interface IIdentityService
 {
+    Task<string?> GetJwtToken(User user);
+    
     Task<string?> GetUserNameAsync(long userId);
 
     Task<bool> IsInRoleAsync(long userId, long roleId);

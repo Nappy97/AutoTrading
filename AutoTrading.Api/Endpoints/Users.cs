@@ -2,6 +2,9 @@
 using AutoTrading.Application.Users.Commands.DeleteUser;
 using AutoTrading.Application.Users.Commands.UpdateUser.ChangePassword;
 using AutoTrading.Application.Users.Commands.UpdateUser.ChangeUserInformation;
+using AutoTrading.Application.Users.Queries.Login;
+using AutoTrading.Shared.Models;
+using Microsoft.AspNetCore.Identity.Data;
 
 namespace AutoTrading.Api.Endpoints;
 
@@ -10,10 +13,16 @@ public class Users : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
+            .MapPost(Login)
             .MapPost(Register)
             .MapPut(UpdateUserInformation, "{id}")
             .MapPut(UpdateUserPassword, "{id}")
             .MapDelete(DeleteUser, "{id}");
+    }
+
+    private Task<JwtToken> Login(ISender sender, LoginUserQuery command)
+    {
+        var send = sender.Send(command);
     }
 
     private Task<long> Register(ISender sender, CreateUserCommand command)
