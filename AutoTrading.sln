@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTrading.Shared", "AutoT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTrading.Tool", "AutoTrading.Tool\AutoTrading.Tool.csproj", "{713010DB-BCC6-4290-9D59-87D222D49C53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTrading.Client", "AutoTrading.Client\AutoTrading.Client.csproj", "{BD971B89-BD42-4B2C-B04A-4DCB6C016688}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,7 @@ Global
 		{4DFBA1F9-1B87-418A-BCE3-EA2B2A2DC55C} = {FAFCAF6C-2E08-4D71-A86E-4F20801957B7}
 		{C25C75F3-10A8-4A3C-BF30-A903DDBF3B66} = {0A321D36-774C-46E3-84F1-F231A4AE9E21}
 		{713010DB-BCC6-4290-9D59-87D222D49C53} = {94956B08-93C4-4B85-BBDC-6AA2E87619E7}
+		{BD971B89-BD42-4B2C-B04A-4DCB6C016688} = {6B2212C5-7A82-4EE6-9351-D6ED559FED3A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CD8266E3-4F85-4DFC-A48E-9E76615D6AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -91,5 +94,9 @@ Global
 		{713010DB-BCC6-4290-9D59-87D222D49C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{713010DB-BCC6-4290-9D59-87D222D49C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{713010DB-BCC6-4290-9D59-87D222D49C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD971B89-BD42-4B2C-B04A-4DCB6C016688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD971B89-BD42-4B2C-B04A-4DCB6C016688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD971B89-BD42-4B2C-B04A-4DCB6C016688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD971B89-BD42-4B2C-B04A-4DCB6C016688}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

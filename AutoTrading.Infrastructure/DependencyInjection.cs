@@ -4,6 +4,7 @@ using AutoTrading.Domain.Constants;
 using AutoTrading.Infrastructure.Data;
 using AutoTrading.Infrastructure.Data.Interceptors;
 using AutoTrading.Infrastructure.Identity;
+using Garnet.server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -66,8 +67,8 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
             };
         });
-
-        services.AddScoped<IUser, UserRepository>();
+        
+        services.AddScoped<IUserService, UserServiceRepository>();
         
         services.AddAuthorizationBuilder()
             .AddPolicy(Policies.CanPurge, policy => policy.RequireRole(RoleLevel.Administrator));

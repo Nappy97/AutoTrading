@@ -22,8 +22,10 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.Garnet" Version="1.0.12" />
       <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.6.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+      <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
     </ItemGroup>
 
     <ItemGroup>

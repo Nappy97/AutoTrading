@@ -1,25 +1,28 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Application.Users.Login;
 using AutoTrading.Application.Users.Register;
 using AutoTrading.Domain.Entities;
+using AutoTrading.Shared.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AutoTrading.Infrastructure.Identity;
 
-public class UserRepository : IUser
+public class UserServiceRepository : IUserService
 {
     private readonly IApplicationDbContext _context;
-    private readonly IConfiguration _configuration;
+    private readonly IJwtService _jwtService;
 
-    public UserRepository(IApplicationDbContext context, IConfiguration configuration)
+    public UserServiceRepository(IApplicationDbContext context, IJwtService jwtService)
     {
         _context = context;
-        _configuration = configuration;
+        _jwtService = jwtService;
     }
     
     public async Task<RegistrationResponse> RegisterUserAsync(RegisterUserDTO registerUserDto)
@@ -51,34 +54,37 @@ public class UserRepository : IUser
         bool checkPassword = getUser.Password == loginDto.Password;
 
         if (checkPassword)
-            return new LoginResponse(true, "성공", GenerateJWTToken(getUser));
+            return new LoginResponse(true, "성공", _jwtService.GenerateAccessToken(getUser));
         else
             return new LoginResponse(false, "비밀번호가 틀립니다.");
     }
 
-    private string GenerateJWTToken(User user)
+    
+
+    private RefreshToken GenerateRefreshToken()
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        var userClaims = new[]
+        var refreshToken = new RefreshToken
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.UserName!)
-            // 권한 role
+            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+            Expires = DateTime.Now.AddDays(7)
         };
 
-        var token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Audience"],
-            claims: userClaims,
-            expires: DateTime.Now.AddDays(1),
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return refreshToken;
     }
+
+    /*private void SetRefreshToken(RefreshToken newRefreshToken)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = newRefreshToken.Expires,
+        };
+        
+        Response
+    }*/
 
     private async Task<User> FindUserByUserName (string userName) =>
         await _context.Users
+            .Include(u => u.UserRoles)
             .FirstOrDefaultAsync(u => u.UserName == userName);
 }

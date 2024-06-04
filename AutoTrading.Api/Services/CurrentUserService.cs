@@ -4,11 +4,11 @@ using AutoTrading.Domain.Entities;
 
 namespace AutoTrading.Api.Services;
 
-public class CurrentUser : IUser
+public class CurrentUserService : IUser
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public CurrentUser(IHttpContextAccessor httpContextAccessor)
+    public CurrentUserService(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
     }

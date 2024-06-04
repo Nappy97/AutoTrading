@@ -3,6 +3,7 @@ using AutoTrading.Api.Services;
 using AutoTrading.Api.Utilities;
 using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Application.Common.Security;
+using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
 using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,7 +19,9 @@ public static class DependencyInjection
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddScoped<IUser, CurrentUser>();
+
+        
+        services.AddScoped<IUser, CurrentUserService>();
 
         services.AddHttpContextAccessor();
 
@@ -46,7 +49,6 @@ public static class DependencyInjection
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
         });
 
-        services.AddIdentityServer()
 
         return services;
     }
