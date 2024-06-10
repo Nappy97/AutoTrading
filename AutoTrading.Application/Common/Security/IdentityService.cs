@@ -6,12 +6,13 @@ namespace AutoTrading.Application.Common.Security;
 
 public class IdentityService : IIdentityService
 {
-    private readonly string? JwtToken;
+    //private readonly string? JwtToken;
+    private readonly IApplicationDbContext _context;
 
-    /*public IdentityService(Jwt jwtToken)
+    public IdentityService(IApplicationDbContext context)
     {
-        JwtToken = jwtToken;
-    }*/
+        _context = context;
+    }
     
     public Task<string?> GetJwtToken(User user)
     {
@@ -21,6 +22,11 @@ public class IdentityService : IIdentityService
     public Task<string?> GetUserNameAsync(long userId)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<User?> GetUserByUserNameAsync(string userName)
+    {
+        return await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
     }
 
     public Task<bool> IsInRoleAsync(long userId, long roleId)

@@ -20,7 +20,6 @@ public class RedisRepository
     public async Task<string> GetDataAsync(string key, string value)
     {
         var result = await _database.StringGetAsync(key);
-
         return result;
     }
 }

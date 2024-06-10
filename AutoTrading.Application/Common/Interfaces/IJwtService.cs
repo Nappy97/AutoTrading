@@ -4,5 +4,6 @@ namespace AutoTrading.Application.Common.Interfaces;
 
 public interface IJwtService
 {
-    string GenerateAccessToken(User user);
+    Task<string> GenerateAccessTokenAsync(User user);
+    Task<bool> GenerateRefreshTokenAsync(User user);
 }

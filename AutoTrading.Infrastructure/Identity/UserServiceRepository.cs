@@ -18,16 +18,18 @@ public class UserServiceRepository : IUserService
 {
     private readonly IApplicationDbContext _context;
     private readonly IJwtService _jwtService;
+    private readonly IIdentityService _identityService;
 
-    public UserServiceRepository(IApplicationDbContext context, IJwtService jwtService)
+    public UserServiceRepository(IApplicationDbContext context, IJwtService jwtService, IIdentityService identityService)
     {
         _context = context;
         _jwtService = jwtService;
+        _identityService = identityService;
     }
     
     public async Task<RegistrationResponse> RegisterUserAsync(RegisterUserDTO registerUserDto)
     {
-        var getUser = await FindUserByUserName(registerUserDto.UserName);
+        var getUser = await _identityService.GetUserByUserNameAsync(registerUserDto.UserName);
 
         if (getUser is not null)
             return new RegistrationResponse(false, "존재하는 유저입니다");
@@ -45,7 +47,7 @@ public class UserServiceRepository : IUserService
 
     public async Task<LoginResponse> LoginUserAsync(LoginDTO loginDto)
     {
-        var getUser = await FindUserByUserName(loginDto.UserName!);
+        var getUser = await _identityService.GetUserByUserNameAsync(loginDto.UserName!);
 
         if (getUser is null)
             return new LoginResponse(false, "없는 유저입니다");
@@ -53,36 +55,15 @@ public class UserServiceRepository : IUserService
         // TODO 암호화시 로직 변경
         bool checkPassword = getUser.Password == loginDto.Password;
 
-        if (checkPassword)
-            return new LoginResponse(true, "성공", _jwtService.GenerateAccessToken(getUser));
-        else
+        if (!checkPassword) 
             return new LoginResponse(false, "비밀번호가 틀립니다.");
-    }
-
-    
-
-    private RefreshToken GenerateRefreshToken()
-    {
-        var refreshToken = new RefreshToken
-        {
-            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-            Expires = DateTime.Now.AddDays(7)
-        };
-
-        return refreshToken;
-    }
-
-    /*private void SetRefreshToken(RefreshToken newRefreshToken)
-    {
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = true,
-            Expires = newRefreshToken.Expires,
-        };
         
-        Response
-    }*/
-
+        var result =  new LoginResponse(true, "성공", await _jwtService.GenerateAccessTokenAsync(getUser));
+        await _jwtService.GenerateRefreshTokenAsync(getUser);
+        return result;
+    }
+    
+    
     private async Task<User> FindUserByUserName (string userName) =>
         await _context.Users
             .Include(u => u.UserRoles)
