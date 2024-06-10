@@ -1,4 +1,5 @@
-﻿using StackExchange.Redis;
+﻿using System.Diagnostics;
+using StackExchange.Redis;
 
 namespace AutoTrading.Infrastructure.Repositories;
 
@@ -19,6 +20,7 @@ public class RedisRepository
     public async Task<string> GetDataAsync(string key, string value)
     {
         var result = await _database.StringGetAsync(key);
-        return result == default ? string.Empty : result;
+
+        return result;
     }
 }

@@ -23,7 +23,7 @@ public class UserRoles : EndpointGroupBase
         return sender.Send(query);
     }
 
-    private Task<long> CreateUserRole(ISender sender, CreateUserRoleCommand command)
+    private Task<(long, long)> CreateUserRole(ISender sender, CreateUserRoleCommand command)
     {
         return sender.Send(command);
     }

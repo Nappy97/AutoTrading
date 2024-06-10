@@ -8,10 +8,10 @@ public class IdentityService : IIdentityService
 {
     private readonly string? JwtToken;
 
-    public IdentityService(Jwt jwtToken)
+    /*public IdentityService(Jwt jwtToken)
     {
         JwtToken = jwtToken;
-    }
+    }*/
     
     public Task<string?> GetJwtToken(User user)
     {

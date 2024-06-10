@@ -1,56 +1,42 @@
-﻿using AutoTrading.Application.Users.Commands.CreateUser;
+﻿using AutoTrading.Application.Common.Interfaces;
+using AutoTrading.Application.Users.Commands.CreateUser;
 using AutoTrading.Application.Users.Commands.DeleteUser;
 using AutoTrading.Application.Users.Commands.UpdateUser.ChangePassword;
 using AutoTrading.Application.Users.Commands.UpdateUser.ChangeUserInformation;
+using AutoTrading.Application.Users.Login;
 using AutoTrading.Application.Users.Queries.Login;
+using AutoTrading.Application.Users.Register;
 using AutoTrading.Shared.Models;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AutoTrading.Api.Endpoints;
 
-public class Users : EndpointGroupBase
+[Route("api/[controller]")]
+[ApiController]
+public class Users : ControllerBase
 {
-    public override void Map(WebApplication app)
+    private readonly IUserService _userService;
+
+    public Users(IUserService userService)
     {
-        app.MapGroup(this)
-            .MapPost(Login)
-            .MapPost(Register)
-            .MapPut(UpdateUserInformation, "{id}")
-            .MapPut(UpdateUserPassword, "{id}")
-            .MapDelete(DeleteUser, "{id}");
+        _userService = userService;
     }
 
-    private Task<JwtToken> Login(ISender sender, LoginUserQuery command)
+    [HttpPost("login")]
+    public async Task<ActionResult<LoginResponse>> LogUserIn(LoginDTO loginDto)
     {
-        var send = sender.Send(command);
+        var result = await _userService.LoginUserAsync(loginDto);
+        return Ok(result);
     }
 
-    private Task<long> Register(ISender sender, CreateUserCommand command)
+    [HttpPost("register")]
+    public async Task<ActionResult<RegistrationResponse>> RegisterUser(RegisterUserDTO registerUserDto)
     {
-        return sender.Send(command);
+        var result = await _userService.RegisterUserAsync(registerUserDto);
+        return Ok(result);
     }
-
-    private async Task<IResult> UpdateUserInformation(ISender sender, long id, UpdateUserInformationCommand command)
-    {
-        if (id != command.Id)
-            return Results.BadRequest();
-
-        await sender.Send(command);
-        return Results.NoContent();
-    }
-
-    private async Task<IResult> UpdateUserPassword(ISender sender, long id, UpdateUserPasswordCommand command)
-    {
-        if (id != command.Id)
-            return Results.BadRequest();
-
-        await sender.Send(command);
-        return Results.NoContent();
-    }
-
-    private async Task<IResult> DeleteUser(ISender sender, long id)
-    {
-        await sender.Send(new DeleteUserCommand(id));
-        return Results.NoContent();
-    }
+    
+    //[HttpPost("refresh")]
+    //public async Task<ActionResult<>>
 }
