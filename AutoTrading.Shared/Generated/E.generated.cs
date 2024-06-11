@@ -1,4 +1,4 @@
-namespace AutoTrading.Domain.Generated;
+namespace AutoTrading.Shared.Generated;
 
 public class E
 {

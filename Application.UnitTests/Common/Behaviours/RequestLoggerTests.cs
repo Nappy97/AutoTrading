@@ -1,7 +1,7 @@
 ﻿using AutoTrading.Application.Accounts.Commands.CreateAccount;
 using AutoTrading.Application.Common.Behaviours;
 using AutoTrading.Application.Common.Interfaces;
-using AutoTrading.Domain.Generated;
+using AutoTrading.Shared.Generated;
 using Microsoft.Extensions.Logging;
 using Moq;
 

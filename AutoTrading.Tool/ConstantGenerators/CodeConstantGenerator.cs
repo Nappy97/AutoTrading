@@ -16,7 +16,7 @@ internal class CodeConstantGenerator : BaseConstantGenerator<Code>
     protected override string GetLiteral(Code item)
     {
         long prefix = item.CodeId / 100;
-        return $"_{prefix}_{item.Text.Clean()}";
+        return $"_{prefix}_{item.Text!.Clean()}";
     }
 
     protected override string GetValue(Code item) => $"{item.CodeId}";

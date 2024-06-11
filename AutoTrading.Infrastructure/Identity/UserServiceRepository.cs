@@ -62,10 +62,4 @@ public class UserServiceRepository : IUserService
         await _jwtService.GenerateRefreshTokenAsync(getUser);
         return result;
     }
-    
-    
-    private async Task<User> FindUserByUserName (string userName) =>
-        await _context.Users
-            .Include(u => u.UserRoles)
-            .FirstOrDefaultAsync(u => u.UserName == userName);
 }

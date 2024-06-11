@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoTrading.Tool;
 
@@ -12,6 +13,8 @@ public class InitializerCodes : ITool
     {
         _context = Program.AddDbContext();
 
+        DeleteTables();
+
         var codeCategoryEntities = new List<CodeCategory>
         {
             new() { CodeCategoryId = 10, Text = "토큰 분류" },
@@ -22,6 +25,7 @@ public class InitializerCodes : ITool
             new() { CodeCategoryId = 15, Text = "거래 분류" }
         };
         _context.CodeCategories.AddRange(codeCategoryEntities);
+
 
         var codeEntities = new List<Code>
         {
@@ -40,9 +44,15 @@ public class InitializerCodes : ITool
 
         codeEntities.ForEach(x => x.Enabled = true);
         _context.Codes.AddRange(codeEntities);
-
+        
         _context.SaveChanges();
     }
 
-    public string Description() => $"{nameof(Code)} & {nameof(CodeCategory)} 생성";
+    public string Description() => $"{nameof(Code)} & {nameof(CodeCategory)} initialize";
+
+    private void DeleteTables()
+    {
+        _context.CodeCategories.ExecuteDelete();
+        _context.Codes.ExecuteDelete();
+    }
 }

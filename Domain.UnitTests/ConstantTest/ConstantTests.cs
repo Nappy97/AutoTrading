@@ -1,5 +1,4 @@
-﻿using AutoTrading.Domain.Exceptions;
-using AutoTrading.Domain.Generated;
+﻿using AutoTrading.Shared.Generated;
 using FluentAssertions;
 using NUnit.Framework;
 
