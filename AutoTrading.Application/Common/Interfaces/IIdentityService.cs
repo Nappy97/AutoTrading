@@ -5,8 +5,6 @@ namespace AutoTrading.Application.Common.Interfaces;
 
 public interface IIdentityService
 {
-    Task<string?> GetJwtToken(User user);
-    
     Task<string?> GetUserNameAsync(long userId);
 
     Task<User?> GetUserByUserNameAsync(string userName);

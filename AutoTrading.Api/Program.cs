@@ -3,13 +3,24 @@ using AutoTrading.Api.Utilities;
 using AutoTrading.Application;
 using AutoTrading.Infrastructure;
 using AutoTrading.Infrastructure.Data;
+using AutoTrading.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services to the container.
 builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(AppSettings.Instance.AutoTrading.ConnectionString);
+
+var infrastructureConfiguration = new InfrastructureConfigurationModel
+{
+    DbConnectionString = AppSettings.Instance.AutoTrading.ConnectionString,
+    JwtAudience = AppSettings.Instance.Jwt.Audience,
+    JwtIssuer = AppSettings.Instance.Jwt.Issuer,
+    JwtKey = AppSettings.Instance.Jwt.Key,
+    RefreshKey = AppSettings.Instance.Jwt.RefreshKey
+};
+
+builder.Services.AddInfrastructureServices(infrastructureConfiguration);
 builder.Services.AddWebServices();
 builder.Services.AddAuthentication(AppSettings.Instance.Jwt);
 

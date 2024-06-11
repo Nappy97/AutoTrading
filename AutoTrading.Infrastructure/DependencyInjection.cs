@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using AutoTrading.Application.Common.Interfaces;
+using AutoTrading.Application.Common.Security;
 using AutoTrading.Domain.Constants;
 using AutoTrading.Infrastructure.Data;
 using AutoTrading.Infrastructure.Data.Interceptors;
 using AutoTrading.Infrastructure.Identity;
+using AutoTrading.Shared.Models;
 using Garnet.server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -17,10 +19,9 @@ namespace AutoTrading.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
-        string dbConnectionString, string jwtIssuer, string jwtAudience, string jwtKey)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, InfrastructureConfigurationModel configuration)
     {
-        Guard.Against.Null(dbConnectionString, message: "Connection string 'DefaultConnection' not found.");
+        Guard.Against.Null(configuration.DbConnectionString, message: "Connection string 'DefaultConnection' not found.");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
@@ -29,7 +30,7 @@ public static class DependencyInjection
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
-            options.UseNpgsql(dbConnectionString);
+            options.UseNpgsql(configuration.DbConnectionString);
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
@@ -41,14 +42,8 @@ public static class DependencyInjection
 
         services.AddAuthorizationBuilder();
 
-        // services
-            // .AddIdentityCore<User>()
-            // .AddRoles<Role>()
-            // .AddEntityFrameworkStores<ApplicationDbContext>()
-            // .AddApiEndpoints();
-
         services.AddSingleton(TimeProvider.System);
-        //services.AddTransient<IIdentityService, IdentityService>();
+        services.AddTransient<IIdentityService, IdentityService>();
 
         services.AddAuthentication(options =>
         {
@@ -62,16 +57,16 @@ public static class DependencyInjection
                 ValidateAudience = true,
                 ValidateIssuerSigningKey = true,
                 ValidateLifetime = true,
-                ValidIssuer = jwtIssuer,
-                ValidAudience = jwtAudience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                ValidIssuer = configuration.JwtIssuer,
+                ValidAudience = configuration.JwtAudience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.JwtKey))
             };
         });
         
         services.AddScoped<IUserService, UserServiceRepository>();
         
-        services.AddAuthorizationBuilder()
-            .AddPolicy(Policies.CanPurge, policy => policy.RequireRole(RoleLevel.Administrator));
+        // services.AddAuthorizationBuilder()
+        //     .AddPolicy(Policies.CanPurge, policy => policy.RequireRole(RoleLevel.Administrator));
 
         return services;
     }

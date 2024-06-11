@@ -11,10 +11,12 @@ public class AppSettings
     {
         var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
 #if DEBUG
                 .AddJsonFile("appsettings.Development.json", true, true)
+#else
+                .AddJsonFile("appsettings.json", true, true)
 #endif
+
             ;
 
         var config = builder.Build();
@@ -62,4 +64,5 @@ public class Jwt
     public string Key { get; set; }
     public string Issuer { get; set; }
     public string Audience { get; set; }
+    public string RefreshKey { get; set; }
 }

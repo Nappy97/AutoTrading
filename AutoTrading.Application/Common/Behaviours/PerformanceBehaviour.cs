@@ -9,10 +9,10 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
 {
     private readonly Stopwatch _timer;
     private readonly ILogger<TRequest> _logger;
-    private readonly User _user;
+    private readonly IUser _user;
     private readonly IIdentityService _identityService;
 
-    public PerformanceBehaviour(ILogger<TRequest> logger, User user, IIdentityService identityService)
+    public PerformanceBehaviour(ILogger<TRequest> logger, IUser user, IIdentityService identityService)
     {
         _timer = new Stopwatch();
         _logger = logger;
@@ -40,7 +40,7 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
             if (userId is not 0)
                 userName = await _identityService.GetUserNameAsync(userId);
 
-            _logger.LogWarning("CleanSample Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
+            _logger.LogWarning("AutoTrading Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
                 requestName, elapsedMilliseconds, userId, userName, request);
         }
 
