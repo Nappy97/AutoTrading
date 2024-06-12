@@ -14,11 +14,11 @@ namespace AutoTrading.Api.Endpoints;
 
 [Route("api/[controller]")]
 [ApiController]
-public class Users : ControllerBase
+public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
 
-    public Users(IUserService userService)
+    public UserController(IUserService userService)
     {
         _userService = userService;
     }

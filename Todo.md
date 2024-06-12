@@ -1,5 +1,5 @@
-1. JWT
-2. Garnet
-3. FrontEnd
-2024/05/29
--> Action Application commands 작성완료, 그 이후부분 TODO
+1. Garnet -> Redis 로 했고 나중에 Garnet으로 교체 예정
+2. WASM api 2일 
+3. WASM 디자인 5일
+
+
