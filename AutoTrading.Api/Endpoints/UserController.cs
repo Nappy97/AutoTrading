@@ -7,6 +7,7 @@ using AutoTrading.Application.Users.Login;
 using AutoTrading.Application.Users.Queries.Login;
 using AutoTrading.Application.Users.Register;
 using AutoTrading.Shared.Models;
+using AutoTrading.Shared.Models.Auth;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 

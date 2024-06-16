@@ -1,16 +1,8 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using AutoTrading.Application.Common.Interfaces;
+﻿using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Application.Users.Login;
 using AutoTrading.Application.Users.Register;
 using AutoTrading.Domain.Entities;
-using AutoTrading.Shared.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+using AutoTrading.Shared.Models.Auth;
 
 namespace AutoTrading.Infrastructure.Identity;
 
@@ -58,8 +50,7 @@ public class UserServiceRepository : IUserService
         if (!checkPassword) 
             return new LoginResponse(false, "비밀번호가 틀립니다.");
         
-        var result =  new LoginResponse(true, "성공", await _jwtService.GenerateAccessTokenAsync(getUser));
-        await _jwtService.GenerateRefreshTokenAsync(getUser);
+        var result =  new LoginResponse(true, "성공", await _jwtService.GenerateAccessTokenAsync(getUser), await _jwtService.GenerateRefreshTokenAsync(getUser));
         return result;
     }
 }

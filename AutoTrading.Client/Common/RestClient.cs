@@ -13,6 +13,11 @@ public interface IRestClient
     Task<RestResult<TResponse>> GetAsync<TResponse>(string uri, Dictionary<string, object>? queryParameters = null,
         CancellationToken cancellationToken = default) where TResponse : class;
 
+    Task<RestResult<TResponse>> GetAsync<TRequest, TResponse>(string uri, TRequest queryParameters,
+        CancellationToken cancellationToken = default)
+        where TRequest : class
+        where TResponse : class;
+
     Task<RestResult<TResponse>> PostAsync<T, TResponse>(string uri, T body,
         CancellationToken cancellationToken = default) where TResponse : class;
 }
@@ -52,9 +57,47 @@ public class RestClient : IRestClient
         }
         catch
         {
-            content = NappyJsonSerializer.Deserialize<TResponse>(await response.Content.ReadAsStringAsync(cancellationToken));
+            content = NappyJsonSerializer.Deserialize<TResponse>(
+                await response.Content.ReadAsStringAsync(cancellationToken));
         }
-        
+
+        return RestResult<TResponse>.AsSuccess(content);
+    }
+
+    public async Task<RestResult<TResponse>> GetAsync<TRequest, TResponse>(string uri, TRequest queryParameters,
+        CancellationToken cancellationToken = default) where TRequest : class where TResponse : class
+    {
+        var queryString = HttpUtility.ParseQueryString(string.Empty);
+        var properties = typeof(TRequest).GetProperties();
+
+        foreach (var property in properties)
+        {
+            var encodedValue = Uri.EscapeDataString((string)property.GetValue(queryParameters)!);
+            queryString.Add(property.Name, encodedValue);
+        }
+
+
+        var serviceUri = new StringBuilder(uri);
+        if (queryString.Count > 0)
+            serviceUri.Append($"?{queryString.ToString()}");
+
+        var response = await _httpClient.GetAsync(serviceUri.ToString(), cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+            return RestResult<TResponse>.AsFail(await response.Content.ReadAsStringAsync(cancellationToken));
+
+        TResponse content;
+        try
+        {
+            var contentAsStr = await response.Content.ReadAsStringAsync(cancellationToken);
+            content = (TResponse)Convert.ChangeType(contentAsStr, typeof(TResponse));
+        }
+        catch
+        {
+            content = NappyJsonSerializer.Deserialize<TResponse>(
+                await response.Content.ReadAsStringAsync(cancellationToken));
+        }
+
         return RestResult<TResponse>.AsSuccess(content);
     }
 
@@ -79,7 +122,8 @@ public class RestClient : IRestClient
     /// <param name="queryParameters"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    private async Task<HttpResponseMessage> GetQueryAsync(string uri, Dictionary<string, object>? queryParameters = null, CancellationToken cancellationToken = default)
+    private async Task<HttpResponseMessage> GetQueryAsync(string uri,
+        Dictionary<string, object>? queryParameters = null, CancellationToken cancellationToken = default)
     {
         var queryString = HttpUtility.ParseQueryString(string.Empty);
         if (queryParameters is not null && queryParameters.Count > 0)

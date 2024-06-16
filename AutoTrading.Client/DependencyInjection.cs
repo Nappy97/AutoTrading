@@ -5,6 +5,7 @@ namespace AutoTrading.Client;
 
 public static class DependencyInjection
 {
+
     public static IServiceCollection AddClientWasm(this IServiceCollection services)
     {
         return services.AddAuthServices()
@@ -12,7 +13,7 @@ public static class DependencyInjection
             .AddBlazorServices()
             .AddServices();
     }
-
+    
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IAuthService, AuthService>();

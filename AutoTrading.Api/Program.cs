@@ -8,7 +8,7 @@ using AutoTrading.Shared.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services to the container.
-builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
+//builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 builder.Services.AddApplicationServices();
 
 var infrastructureConfiguration = new InfrastructureConfigurationModel
@@ -17,7 +17,8 @@ var infrastructureConfiguration = new InfrastructureConfigurationModel
     JwtAudience = AppSettings.Instance.Jwt.Audience,
     JwtIssuer = AppSettings.Instance.Jwt.Issuer,
     JwtKey = AppSettings.Instance.Jwt.Key,
-    RefreshKey = AppSettings.Instance.Jwt.RefreshKey
+    RefreshKey = AppSettings.Instance.Jwt.RefreshKey,
+    RedisConnectionString = AppSettings.Instance.CacheDb.RedisConnectionString
 };
 
 builder.Services.AddInfrastructureServices(infrastructureConfiguration);

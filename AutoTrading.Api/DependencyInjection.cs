@@ -47,7 +47,6 @@ public static class DependencyInjection
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
         });
 
-
         return services;
     }
 

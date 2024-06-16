@@ -1,9 +1,10 @@
 ﻿using AutoTrading.Domain.Entities;
+using AutoTrading.Shared.Models.Auth;
 
 namespace AutoTrading.Application.Common.Interfaces;
 
 public interface IJwtService
 {
-    Task<string> GenerateAccessTokenAsync(User user);
-    Task<bool> GenerateRefreshTokenAsync(User user);
+    Task<AuthResult> GenerateAccessTokenAsync(User user);
+    Task<string> GenerateRefreshTokenAsync(User user);
 }

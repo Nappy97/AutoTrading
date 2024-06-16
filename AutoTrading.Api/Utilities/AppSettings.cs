@@ -35,6 +35,7 @@ public class RootObject
     public Garnet Garnet { get; set; }
     public AutoTrading AutoTrading { get; set; }
     public Jwt Jwt { get; set; }
+    public CacheDb CacheDb { get; set; }
 }
 
 public class Logging
@@ -65,4 +66,9 @@ public class Jwt
     public string Issuer { get; set; }
     public string Audience { get; set; }
     public string RefreshKey { get; set; }
+}
+
+public class CacheDb
+{
+    public string RedisConnectionString { get; set; }
 }

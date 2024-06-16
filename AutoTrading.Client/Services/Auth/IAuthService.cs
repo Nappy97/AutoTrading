@@ -1,4 +1,6 @@
-﻿namespace AutoTrading.Client.Services.Auth;
+﻿using AutoTrading.Shared.Models.Auth;
+
+namespace AutoTrading.Client.Services.Auth;
 
 public interface IAuthService
 {

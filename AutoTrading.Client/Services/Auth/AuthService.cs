@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using AutoTrading.Shared.Models.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AutoTrading.Client.Services.Auth;
