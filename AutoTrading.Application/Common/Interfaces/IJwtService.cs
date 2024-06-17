@@ -6,5 +6,5 @@ namespace AutoTrading.Application.Common.Interfaces;
 public interface IJwtService
 {
     Task<AuthResult> GenerateAccessTokenAsync(User user);
-    Task<string> GenerateRefreshTokenAsync(User user);
+    //Task<string> GenerateRefreshTokenAsync(User user);
 }

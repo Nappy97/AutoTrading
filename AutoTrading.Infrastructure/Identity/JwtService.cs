@@ -54,14 +54,14 @@ public class JwtService : IJwtService
         var token = jwtSecurityTokenHandler.CreateToken(tokenDescriptor);
         var jwtToken = jwtSecurityTokenHandler.WriteToken(token);
 
-        var refreshToken = new RefreshToken(token.Id, jwtToken, DateTime.Now.AddMonths(1));
+        var refreshToken = await GenerateRefreshTokenAsync(jwtToken);
 
-        return new AuthResult()
+        return new AuthResult(true, jwtToken, refreshToken);
     }
 
-    public async Task<string> GenerateRefreshTokenAsync(string jwtToken)
+    private async Task<string> GenerateRefreshTokenAsync(string jwtToken)
     {
-        var refreshToken = jwtToken.SHA256Hash();
+        var refreshToken = jwtToken.Sha256Hash();
         await _cacheService.SetAsync(jwtToken, refreshToken);
         return refreshToken;
     }

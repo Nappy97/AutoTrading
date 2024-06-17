@@ -1,6 +1,4 @@
-﻿using AutoTrading.Application.Users.Login;
-using AutoTrading.Application.Users.Register;
-using AutoTrading.Shared.Models.Auth;
+﻿using AutoTrading.Shared.Models.Auth;
 
 namespace AutoTrading.Application.Common.Interfaces;
 

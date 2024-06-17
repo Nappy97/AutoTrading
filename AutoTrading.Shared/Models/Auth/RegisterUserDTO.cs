@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AutoTrading.Application.Users.Register;
+namespace AutoTrading.Shared.Models.Auth;
 
 public class RegisterUserDTO
 {

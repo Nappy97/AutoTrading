@@ -1,6 +1,4 @@
 ﻿using AutoTrading.Application.Common.Interfaces;
-using AutoTrading.Application.Users.Login;
-using AutoTrading.Application.Users.Register;
 using AutoTrading.Domain.Entities;
 using AutoTrading.Shared.Models.Auth;
 
@@ -49,8 +47,10 @@ public class UserServiceRepository : IUserService
 
         if (!checkPassword) 
             return new LoginResponse(false, "비밀번호가 틀립니다.");
+
+        var generateToken = await _jwtService.GenerateAccessTokenAsync(getUser);
         
-        var result =  new LoginResponse(true, "성공", await _jwtService.GenerateAccessTokenAsync(getUser), await _jwtService.GenerateRefreshTokenAsync(getUser));
+        var result =  new LoginResponse(true, "성공", generateToken.JwtToken, generateToken.RefreshToken);
         return result;
     }
 }

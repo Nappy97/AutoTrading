@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AutoTrading.Application.Users.Login;
+namespace AutoTrading.Shared.Models.Auth;
 
 public class LoginDTO
 {
