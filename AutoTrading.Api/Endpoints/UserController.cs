@@ -3,7 +3,6 @@ using AutoTrading.Application.Users.Commands.CreateUser;
 using AutoTrading.Application.Users.Commands.DeleteUser;
 using AutoTrading.Application.Users.Commands.UpdateUser.ChangePassword;
 using AutoTrading.Application.Users.Commands.UpdateUser.ChangeUserInformation;
-using AutoTrading.Application.Users.Queries.Login;
 using AutoTrading.Shared.Models;
 using AutoTrading.Shared.Models.Auth;
 using Microsoft.AspNetCore.Identity.Data;

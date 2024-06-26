@@ -1,10 +1,11 @@
-﻿using AutoTrading.Shared.Models.Auth;
+﻿using AutoTrading.Client.Common;
+using AutoTrading.Shared.Models.Auth;
 
 namespace AutoTrading.Client.Services.Auth;
 
 public interface IAuthService
 {
-    Task<RegistrationResponse?> Register(RegisterUserDTO request);
+    Task<RestResult<RegistrationResponse>> Register(RegisterUserDTO request);
     
-    Task<LoginResponse?> Login(LoginDTO request);
+    Task<RestResult<LoginResponse>> Login(LoginDTO request);
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using AutoTrading.Client.Common;
 using AutoTrading.Shared.Models.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -6,25 +7,22 @@ namespace AutoTrading.Client.Services.Auth;
 
 public class AuthService : IAuthService
 {
-    private readonly HttpClient _http;
-    private readonly AuthenticationStateProvider _authenticationStateProvider;
+    private readonly IRestClient _client;
 
-    public AuthService(HttpClient http, AuthenticationStateProvider authenticationStateProvider)
+    public AuthService(IRestClient client)
     {
-        _http = http;
-        _authenticationStateProvider = authenticationStateProvider;
+        _client = client;
     }
-    
+
     // 회원가입
-    public async Task<RegistrationResponse?> Register(RegisterUserDTO request)
+    public async Task<RestResult<RegistrationResponse>> Register(RegisterUserDTO request)
     {
-        var result = await _http.PostAsJsonAsync("api/user/register", request);
-        return await result.Content.ReadFromJsonAsync<RegistrationResponse>();
+        return await _client.PostAsync<RegisterUserDTO, RegistrationResponse>("api/user/register", request);
     }
 
-    public async Task<LoginResponse?> Login(LoginDTO request)
+    // 로그인
+    public async Task<RestResult<LoginResponse>> Login(LoginDTO request)
     {
-        var result = await _http.PostAsJsonAsync("api/user/login", request);
-        return await result.Content.ReadFromJsonAsync<LoginResponse>();
+        return await _client.PostAsync<LoginDTO, LoginResponse>("api/user/login", request);
     }
 }

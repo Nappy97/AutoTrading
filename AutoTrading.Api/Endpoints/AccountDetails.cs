@@ -13,8 +13,8 @@ public class AccountDetails : EndpointGroupBase
         app.MapGroup(this)
             .RequireAuthorization()
             .MapGet(GetAccountDetailsWithPagination)
-            .MapPost(CreateAccountDetails)
-            .MapPut(UpdateAccountDetails, "{id}");
+            .MapPost(CreateAccountDetail)
+            .MapPut(UpdateAccountDetail, "{id}");
     }
 
     private Task<PaginatedList<AccountDetailBriefDto>> GetAccountDetailsWithPagination(ISender sender,
@@ -23,12 +23,12 @@ public class AccountDetails : EndpointGroupBase
         return sender.Send(query);
     }
 
-    private Task<long> CreateAccountDetails(ISender sender, CreateAccountCommand command)
+    private Task<long> CreateAccountDetail(ISender sender, CreateAccountCommand command)
     {
         return sender.Send(command);
     }
 
-    private async Task<IResult> UpdateAccountDetails(ISender sender, UpdateAccountCommand command, long id)
+    private async Task<IResult> UpdateAccountDetail(ISender sender, UpdateAccountCommand command, long id)
     {
         if (id != command.Id)
             return Results.BadRequest();
