@@ -25,6 +25,8 @@ public interface IApplicationDbContext
     DbSet<Action> Actions { get; }
     
     DbSet<ActionRole> ActionRoles { get; }
+    
+    DbSet<Promotion> Promotions { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

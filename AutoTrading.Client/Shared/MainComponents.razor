@@ -1,5 +1,13 @@
-﻿<h3>MainComponants</h3>
-
-@code {
-    
+﻿@if (_restResult.Success)
+{
+    <div class="slider">
+        @foreach (var promotion in _restResult.Value)
+        {
+            <div class="slide"><img src="@promotion.ImagePath" alt="@promotion.PromotionName"/></div>
+        }
+    </div>
+}
+else
+{
+    <span>@_restResult.ErrorMessage</span>
 }

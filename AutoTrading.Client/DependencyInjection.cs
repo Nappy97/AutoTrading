@@ -1,5 +1,9 @@
 ﻿using AutoTrading.Client.Common;
 using AutoTrading.Client.Models.AppSettings;
+using AutoTrading.Client.Services.Account;
+using AutoTrading.Client.Services.AccountDetail;
+using AutoTrading.Client.Services.Promotion;
+using AutoTrading.Client.Services.Stock;
 
 namespace AutoTrading.Client;
 
@@ -17,6 +21,10 @@ public static class DependencyInjection
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IAccountDetailService, AccountDetailService>();
+        services.AddScoped<IPromotionService, PromotionService>();
+        services.AddScoped<IStockService, StockService>();
         return services;
     }
 

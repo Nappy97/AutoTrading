@@ -21,12 +21,10 @@ public interface IRestClient
     Task<RestResult<TResponse>> PostAsync<TRequest, TResponse>(string uri, TRequest body,
         CancellationToken cancellationToken = default) where TRequest : class;
 
-    Task<RestResult<TResponse>> PutAsync<TRequest, TResponse>(string uri, TRequest body,
-        Dictionary<string, object>? queryParameters = null, CancellationToken cancellationToken = default)
+    Task<RestResult<TResponse>> PutAsync<TRequest, TResponse>(string uri, TRequest body, CancellationToken cancellationToken = default)
         where TRequest : class;
 
-    Task<RestResult<TResponse>> DeleteAsync<TResponse>(string uri, Dictionary<string, object>? queryParameters = null,
-        CancellationToken cancellationToken = default);
+    Task<RestResult<TResponse>> DeleteAsync<TResponse>(string uri, CancellationToken cancellationToken = default);
 }
 
 public class RestClient : IRestClient
@@ -123,11 +121,9 @@ public class RestClient : IRestClient
     }
 
     public async Task<RestResult<TResponse>> PutAsync<TRequest, TResponse>(string uri, TRequest body,
-        Dictionary<string, object>? queryParameters = null,
         CancellationToken cancellationToken = default) where TRequest : class
     {
-        var serviceUri = GetQueryParametersToUri(uri, queryParameters);
-        var response = await _httpClient.PutAsJsonAsync(serviceUri, body, NappyJsonSerializer.DefaultSerializerOptions,
+        var response = await _httpClient.PutAsJsonAsync(uri, body, NappyJsonSerializer.DefaultSerializerOptions,
             cancellationToken);
 
         if (!response.IsSuccessStatusCode)
@@ -139,11 +135,9 @@ public class RestClient : IRestClient
         return RestResult<TResponse>.AsSuccess(content);
     }
 
-    public async Task<RestResult<TResponse>> DeleteAsync<TResponse>(string uri, Dictionary<string, object>? queryParameters = null,
-        CancellationToken cancellationToken = default)
+    public async Task<RestResult<TResponse>> DeleteAsync<TResponse>(string uri, CancellationToken cancellationToken = default)
     {
-        var serviceUri = GetQueryParametersToUri(uri, queryParameters);
-        var response = await _httpClient.DeleteAsync(serviceUri, cancellationToken);
+        var response = await _httpClient.DeleteAsync(uri, cancellationToken);
 
         if (!response.IsSuccessStatusCode)
             return RestResult<TResponse>.AsFail(await response.Content.ReadAsStringAsync(cancellationToken));

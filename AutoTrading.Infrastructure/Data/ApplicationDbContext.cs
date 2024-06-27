@@ -33,6 +33,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Action> Actions => Set<Action>();
 
+    public DbSet<Promotion> Promotions => Set<Promotion>();
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -29,14 +29,11 @@ public class AccountService : IAccountService
 
     public async Task<RestResult<bool>> UpdateAccount(long id, UpdateAccountCommand command)
     {
-        var queryParameter = id.ToQueryParameters(nameof(id));
-        return await _client.PutAsync<UpdateAccountCommand, bool>($"{BaseUri}{nameof(UpdateAccount)}", command,
-            queryParameter);
+        return await _client.PutAsync<UpdateAccountCommand, bool>($"{BaseUri}{nameof(UpdateAccount)}/{id}", command);
     }
 
     public async Task<RestResult<bool>> DeleteAccount(long id)
     {
-        var queryParameter = id.ToQueryParameters(nameof(id));
-        return await _client.DeleteAsync<bool>($"{BaseUri}{nameof(DeleteAccount)}", queryParameter);
+        return await _client.DeleteAsync<bool>($"{BaseUri}{nameof(DeleteAccount)}/{id}");
     }
 }

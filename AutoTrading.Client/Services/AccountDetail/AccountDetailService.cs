@@ -30,8 +30,6 @@ public class AccountDetailService : IAccountDetailService
 
     public async Task<RestResult<bool>> UpdateAccountDetail(long id, UpdateAccountCommand command)
     {
-        var queryParameter = id.ToQueryParameters(nameof(id));
-        return await _client.PutAsync<UpdateAccountCommand, bool>($"{BaseUri}{nameof(UpdateAccountDetail)}", command,
-            queryParameter);
+        return await _client.PutAsync<UpdateAccountCommand, bool>($"{BaseUri}{nameof(UpdateAccountDetail)}/{id}", command);
     }
 }

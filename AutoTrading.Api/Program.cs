@@ -23,7 +23,7 @@ var infrastructureConfiguration = new InfrastructureConfigurationModel
 
 builder.Services.AddInfrastructureServices(infrastructureConfiguration);
 builder.Services.AddWebServices();
-builder.Services.AddAuthentication(AppSettings.Instance.Jwt);
+//builder.Services.AddAuthentication(AppSettings.Instance.Jwt);
 
 var app = builder.Build();
 
