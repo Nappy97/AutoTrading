@@ -7,6 +7,8 @@ public interface IIdentityService
 {
     Task<string?> GetUserNameAsync(long userId);
 
+    Task<User?> GetUserBydIdAsync(long userId);
+
     Task<User?> GetUserByUserNameAsync(string userName);
 
     Task<bool> IsInRoleAsync(long userId, long roleId);

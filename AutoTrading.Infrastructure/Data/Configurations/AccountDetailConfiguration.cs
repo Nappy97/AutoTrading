@@ -24,7 +24,6 @@ public class AccountDetailConfiguration : IEntityTypeConfiguration<AccountDetail
             .HasComment("개당 판매 가격");
 
         builder.Property(a => a.SoldQuantity)
-            .HasComment("판매 수량")
             .HasComment("판매 수량");
 
         builder.Property(a => a.SoldAt)

@@ -5,7 +5,7 @@ namespace AutoTrading.Client.Services.Auth;
 
 public interface IAuthService
 {
-    Task<RestResult<RegistrationResponse>> Register(RegisterUserDTO request);
+    Task<RestResult<RegistrationResponse>> Register(RegisterRequest request);
     
-    Task<RestResult<LoginResponse>> Login(LoginDTO request);
+    Task<RestResult<LoginResponse>> Login(LoginRequest request);
 }

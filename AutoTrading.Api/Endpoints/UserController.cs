@@ -1,4 +1,5 @@
-﻿using AutoTrading.Application.Common.Interfaces;
+﻿using System.Security.Claims;
+using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Application.Users.Commands.CreateUser;
 using AutoTrading.Application.Users.Commands.DeleteUser;
 using AutoTrading.Application.Users.Commands.UpdateUser.ChangePassword;
@@ -7,6 +8,8 @@ using AutoTrading.Shared.Models;
 using AutoTrading.Shared.Models.Auth;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using LoginRequest = AutoTrading.Shared.Models.Auth.LoginRequest;
+using RegisterRequest = AutoTrading.Shared.Models.Auth.RegisterRequest;
 
 namespace AutoTrading.Api.Endpoints;
 
@@ -22,19 +25,33 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<LoginResponse>> LogUserIn(LoginDTO loginDto)
+    public async Task<ActionResult<LoginResponse>> LogUserIn(LoginRequest loginRequest)
     {
-        var result = await _userService.LoginUserAsync(loginDto);
+        var result = await _userService.LoginUserAsync(loginRequest);
         return Ok(result);
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<RegistrationResponse>> RegisterUser(RegisterUserDTO registerUserDto)
+    public async Task<ActionResult<RegistrationResponse>> RegisterUser(RegisterRequest registerRequest)
     {
-        var result = await _userService.RegisterUserAsync(registerUserDto);
+        var result = await _userService.RegisterUserAsync(registerRequest);
+        return result.Flag ? Ok(result) : BadRequest(result);
+    }
+
+    [HttpPost("refresh")]
+    public async Task<ActionResult<bool>> RefreshToken(RefreshToken refreshToken)
+    {
+        var result = await _userService.RequestRefreshToken(refreshToken);
         return Ok(result);
     }
-    
+
+    [HttpPut("modify/password")]
+    public async Task<ActionResult<bool>> ModifyPassword(ModifyPasswordRequest modifyPasswordRequest)
+    {
+        var result = await _userService.ModifyPassword(modifyPasswordRequest);
+        return Ok(result);
+    }
+
     //[HttpPost("refresh")]
     //public async Task<ActionResult<>>
 }

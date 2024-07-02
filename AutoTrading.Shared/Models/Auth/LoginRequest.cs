@@ -2,7 +2,7 @@
 
 namespace AutoTrading.Shared.Models.Auth;
 
-public class LoginDTO
+public class LoginRequest
 {
     [Required]
     public string? UserName { get; set; } = string.Empty;

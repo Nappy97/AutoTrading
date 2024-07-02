@@ -15,14 +15,14 @@ public class AuthService : IAuthService
     }
 
     // 회원가입
-    public async Task<RestResult<RegistrationResponse>> Register(RegisterUserDTO request)
+    public async Task<RestResult<RegistrationResponse>> Register(RegisterRequest request)
     {
-        return await _client.PostAsync<RegisterUserDTO, RegistrationResponse>("api/user/register", request);
+        return await _client.PostAsync<RegisterRequest, RegistrationResponse>("api/user/register", request);
     }
 
     // 로그인
-    public async Task<RestResult<LoginResponse>> Login(LoginDTO request)
+    public async Task<RestResult<LoginResponse>> Login(LoginRequest request)
     {
-        return await _client.PostAsync<LoginDTO, LoginResponse>("api/user/login", request);
+        return await _client.PostAsync<LoginRequest, LoginResponse>("api/user/login", request);
     }
 }

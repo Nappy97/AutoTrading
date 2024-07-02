@@ -2,7 +2,7 @@
 
 namespace AutoTrading.Shared.Models.Auth;
 
-public class RegisterUserDTO
+public class RegisterRequest
 {
     [Required, MaxLength(50), MinLength(5)]
     public string UserName { get; set; } = string.Empty;

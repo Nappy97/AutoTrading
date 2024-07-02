@@ -24,6 +24,11 @@ public class IdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
+    public async Task<User?> GetUserBydIdAsync(long userId)
+    {
+        return await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+    }
+
     public async Task<User?> GetUserByUserNameAsync(string userName)
     {
         return await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
