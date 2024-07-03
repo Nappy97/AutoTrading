@@ -191,18 +191,23 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "email": {
-            "type": "string"
+          "flag": {
+            "type": "boolean"
           },
-          "password": {
-            "type": "string"
-          },
-          "twoFactorCode": {
+          "message": {
             "type": "string",
             "nullable": true
           },
-          "twoFactorRecoveryCode": {
+          "token": {
             "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "expired": {
+            "type": "integer",
             "nullable": true
           }
         }

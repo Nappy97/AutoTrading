@@ -7,5 +7,5 @@ public class InfrastructureConfigurationModel
     public required string JwtAudience { get; set; }
     public required string JwtKey { get; set; }
     public required string RefreshKey { get; set; }
-    public required string RedisConnectionString;
+    public required string RedisConnectionString { get; set; }
 }

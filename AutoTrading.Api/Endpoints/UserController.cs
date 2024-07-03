@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<LoginResponse>> LogUserIn(LoginRequest loginRequest)
     {
         var result = await _userService.LoginUserAsync(loginRequest);
-        return Ok(result);
+        return result.Flag ? Ok(result) : BadRequest(result);
     }
 
     [HttpPost("register")]

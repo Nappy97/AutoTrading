@@ -23,8 +23,8 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6" />
-      <PackageReference Include="Microsoft.Garnet" Version="1.0.13" />
-      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.6.0" />
+      <PackageReference Include="Microsoft.Garnet" Version="1.0.15" />
+      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.6.2" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
       <PackageReference Include="Scrutor" Version="4.2.2" />
     </ItemGroup>
