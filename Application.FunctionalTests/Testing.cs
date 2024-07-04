@@ -2,6 +2,7 @@
 using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -50,27 +51,13 @@ public partial class Testing
 
     public static async Task<long> RunAsDefaultUserAsync()
     {
-        //return await RunAsUserAsync("test@local", "Testing1234!", Array.Empty<string>());
-        return 1;
+        return 2L;
     }
 
     public static async Task<long> RunAsAdministratorAsync()
     {
-        //return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { Roles.Administrator });
-        return 1;
+        return 1L;
     }
-
-    /*public static async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
-    {
-        using var scope = _scopeFactory.CreateScope();
-
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        context.Users.Where(u => u.UserRoleId)
-
-
-        
-        throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
-    }*/
 
     public static async Task ResetState()
     {

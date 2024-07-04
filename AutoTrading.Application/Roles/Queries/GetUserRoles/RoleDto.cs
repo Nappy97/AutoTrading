@@ -6,14 +6,14 @@ public class RoleDto
 {
     public RoleDto()
     {
-        Items = Array.Empty<UserRoleDto>();
+        UserRoles = Array.Empty<UserRoleDto>();
     }
 
     public long Id { get; init; }
     
     public string? Name { get; init; }
     
-    public IReadOnlyCollection<UserRoleDto> Items { get; init; }
+    public IReadOnlyCollection<UserRoleDto> UserRoles { get; init; }
 
     private class Mapping : Profile
     {

@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Application.FunctionalTests;
+
+using static Testing;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
@@ -25,8 +28,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         builder.ConfigureTestServices(services =>
         {
             services
-                .RemoveAll<User>()
-                .AddTransient(provider => Mock.Of<User>(s => s.Id == GetUserId()));
+                .RemoveAll<IUser>()
+                .AddTransient(provider => Mock.Of<IUser>(s => s.Id == GetUserId()));
 
             services
                 .RemoveAll<DbContextOptions<ApplicationDbContext>>()

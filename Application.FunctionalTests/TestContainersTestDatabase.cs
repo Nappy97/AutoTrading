@@ -7,14 +7,14 @@ using Testcontainers.PostgreSql;
 
 namespace Application.FunctionalTests;
 
-public class TestcontainersTestDatabase
+public class TestContainersTestDatabase : ITestDatabase
 {
     private readonly PostgreSqlContainer _container;
     private DbConnection _connection = null!;
     private string _connectionString = null!;
     private Respawner _respawner = null!;
 
-    public TestcontainersTestDatabase()
+    public TestContainersTestDatabase()
     {
         _container = new PostgreSqlBuilder()
             .WithAutoRemove(true)
@@ -39,7 +39,7 @@ public class TestcontainersTestDatabase
 
         _respawner = await Respawner.CreateAsync(_connectionString, new RespawnerOptions
         {
-            TablesToIgnore = new Respawn.Graph.Table[] { "__EFMigrationsHistory" }
+            TablesToIgnore = ["__EFMigrationsHistory"]
         });
     }
 

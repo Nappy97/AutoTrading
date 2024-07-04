@@ -6,7 +6,7 @@ public class AccountDto
 {
     public AccountDto()
     {
-        Items = Array.Empty<AccountDetailDto>();
+        AccountDetails = Array.Empty<AccountDetailDto>();
     }
     
     public long Id { get; init; }
@@ -21,7 +21,7 @@ public class AccountDto
 
     public int CurrentCurrency { get; init; }
 
-    public IReadOnlyCollection<AccountDetailDto> Items { get; init; }
+    public IReadOnlyCollection<AccountDetailDto> AccountDetails { get; init; }
 
     private class Mapping : Profile
     {

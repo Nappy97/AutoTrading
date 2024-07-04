@@ -6,7 +6,7 @@ public class ActionDto
 {
     public ActionDto()
     {
-        Items = Array.Empty<ActionRoleDto>();
+        ActionRoles = Array.Empty<ActionRoleDto>();
     }
 
     public long Id { get; init; }
@@ -15,7 +15,7 @@ public class ActionDto
 
     public string? Memo { get; init; }
     
-    public IReadOnlyCollection<ActionRoleDto> Items { get; init; }
+    public IReadOnlyCollection<ActionRoleDto> ActionRoles { get; init; }
     
     private class Mapping : Profile
     {
