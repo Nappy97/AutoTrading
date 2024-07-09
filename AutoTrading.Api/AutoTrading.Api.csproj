@@ -34,6 +34,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\AutoTrading.Application\AutoTrading.Application.csproj" />
+        <ProjectReference Include="..\AutoTrading.Core\AutoTrading.Core.csproj" />
         <ProjectReference Include="..\AutoTrading.Infrastructure\AutoTrading.Infrastructure.csproj"/>
         <ProjectReference Include="..\AutoTrading.Shared\AutoTrading.Shared.csproj" />
     </ItemGroup>

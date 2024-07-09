@@ -25,5 +25,8 @@ public class PromotionConfiguration : IEntityTypeConfiguration<Promotion>
             .HasMaxLength(200)
             .IsRequired()
             .HasComment("이미지 경로");
+
+        builder.HasIndex(p => p.PromotionName)
+            .IsUnique();
     }
 }

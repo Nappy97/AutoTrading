@@ -32,4 +32,8 @@
       <ProjectReference Include="..\AutoTrading.Api\AutoTrading.Api.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Stocks\Queries\" />
+    </ItemGroup>
+
 </Project>

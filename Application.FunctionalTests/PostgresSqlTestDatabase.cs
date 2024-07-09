@@ -20,7 +20,7 @@ public class PostgresSqlTestDatabase : ITestDatabase
             .AddEnvironmentVariables()
             .Build();
 
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("ConnectionString");
 
         Guard.Against.Null(connectionString);
 

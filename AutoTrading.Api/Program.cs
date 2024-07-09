@@ -1,6 +1,7 @@
 using AutoTrading.Api;
 using AutoTrading.Api.Utilities;
 using AutoTrading.Application;
+using AutoTrading.Core;
 using AutoTrading.Infrastructure;
 using AutoTrading.Infrastructure.Data;
 using AutoTrading.Shared.Models;
@@ -22,6 +23,7 @@ var infrastructureConfiguration = new InfrastructureConfigurationModel
 };
 
 builder.Services.AddInfrastructureServices(infrastructureConfiguration);
+builder.Services.AddCoreServices();
 builder.Services.AddWebServices();
 //builder.Services.AddAuthentication(AppSettings.Instance.Jwt);
 

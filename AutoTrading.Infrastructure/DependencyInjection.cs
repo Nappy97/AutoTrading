@@ -2,6 +2,7 @@
 using AutoTrading.Application.Common.Interfaces;
 using AutoTrading.Application.Common.Security;
 using AutoTrading.Domain.Constants;
+using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
 using AutoTrading.Infrastructure.Data.Interceptors;
 using AutoTrading.Infrastructure.Extensions;
@@ -52,16 +53,16 @@ public static class DependencyInjection
 
         var tokenValidationParameter = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
-            ValidIssuer = configuration.JwtIssuer,
-            ValidAudience = configuration.JwtAudience,
+            //ValidIssuer = configuration.JwtIssuer,
+            //ValidAudience = configuration.JwtAudience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.JwtKey)),
             RequireExpirationTime = true
         };
-        
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -71,13 +72,19 @@ public static class DependencyInjection
             options.SaveToken = true;
             options.TokenValidationParameters = tokenValidationParameter;
         });
-        
-        
+
+
+        services
+            .AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddApiEndpoints();
         
         services.AddScoped<IJwtService, JwtService>();
-        services.AddScoped<IUserService, UserServiceRepository>();
-        
-        services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(configuration.RedisConnectionString));
+
+        services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(new ConfigurationOptions
+        {
+            EndPoints = { configuration.RedisConnectionString }
+        }));
         services.AddRedisOutputCache();
 
         // services.AddAuthorizationBuilder()
@@ -85,4 +92,4 @@ public static class DependencyInjection
 
         return services;
     }
-} 
+}

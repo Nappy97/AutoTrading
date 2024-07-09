@@ -8,6 +8,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.HasKey(u => u.Id);
+        
         builder.Property(u => u.UserName)
             .HasMaxLength(20)
             .IsRequired();
@@ -28,5 +30,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.AccessFailedCount)
             .HasDefaultValue(0)
             .IsRequired();
+
+        builder.HasIndex(u => u.UserName)
+            .IsUnique();
     }
 }

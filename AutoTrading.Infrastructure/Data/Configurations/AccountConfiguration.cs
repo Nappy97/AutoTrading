@@ -38,5 +38,8 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(a => a.Memo)
             .IsRequired()
             .HasComment("특이사항");
+
+        builder.HasIndex(a => a.AccountNumber)
+            .IsUnique();
     }
 }

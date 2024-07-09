@@ -1,8 +1,9 @@
 ﻿using AutoTrading.Domain.Constants;
+using Microsoft.AspNetCore.Identity;
 
 namespace AutoTrading.Domain.Entities;
 
-public class User : BaseEntity
+public class User : IdentityUser<long>
 {
     public string? UserName { get; set; }
     public string? Password { get; set; }

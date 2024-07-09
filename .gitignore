@@ -1228,4 +1228,4 @@ fabric.properties
 
 AutoTrading.Api/appsettings.json
 AutoTrading.Api/appsettings.Development.json
-
+Application.FunctionalTests/appsettomgs.json

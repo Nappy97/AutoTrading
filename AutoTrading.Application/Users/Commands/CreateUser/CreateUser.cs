@@ -4,16 +4,18 @@ using AutoTrading.Domain.Entities;
 
 namespace AutoTrading.Application.Users.Commands.CreateUser;
 
-public record CreateUserCommand : IRequest<long>
+public record CreateUserCommand : IRequest<bool>
 {
     public string? UserName { get; init; }
 
     public string? Password { get; init; }
 
+    public string? ConfirmPassword { get; init; }
+
     public string? Name { get; init; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, long>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
 {
     private readonly IApplicationDbContext _context;
 
@@ -22,7 +24,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, long>
         _context = context;
     }
 
-    public async Task<long> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var entity = new User
         {
@@ -35,6 +37,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, long>
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return true;
     }
 }

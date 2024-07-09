@@ -2,6 +2,8 @@
 
 public interface IUser
 {
+    bool HasAuthenticated { get; }
+    
     long Id { get; }
     
     string Name { get; }

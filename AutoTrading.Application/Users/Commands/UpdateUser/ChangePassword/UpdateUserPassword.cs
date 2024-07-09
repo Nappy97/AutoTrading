@@ -1,11 +1,10 @@
 ﻿using AutoTrading.Application.Common.Interfaces;
+using AutoTrading.Domain.Entities;
 
 namespace AutoTrading.Application.Users.Commands.UpdateUser.ChangePassword;
 
-public record UpdateUserPasswordCommand : IRequest
+public record UpdateUserPasswordCommandQuery(User User) : IRequest
 {
-    public long Id { get; init; }
-
     public string? OldPassword { get; init; }
 
     public string? NewPassword { get; init; }
@@ -13,7 +12,7 @@ public record UpdateUserPasswordCommand : IRequest
     public string? ConfirmNewPassword { get; init; }
 }
 
-public class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswordCommand>
+public class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswordCommandQuery>
 {
     private readonly IApplicationDbContext _context;
 
@@ -22,23 +21,9 @@ public class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswo
         _context = context;
     }
 
-    public async Task Handle(UpdateUserPasswordCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateUserPasswordCommandQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Users
-            .FindAsync([request.Id], cancellationToken);
-
-        Guard.Against.NotFound(request.Id, entity);
-        
-        //if(entity.Password != request.OldPassword)
-
-        entity.Password = request.NewPassword;
-
+        request.User.Password = request.NewPassword;
         await _context.SaveChangesAsync(cancellationToken);
-    }
-    
-    private async Task<bool> IsOwnAccount(long userId, long accountId, CancellationToken cancellationToken = default)
-    {
-        return await _context.Accounts
-            .AnyAsync(account => account.Id == accountId && account.UserId == userId, cancellationToken);
     }
 }

@@ -36,5 +36,11 @@ public class StockConfiguration : IEntityTypeConfiguration<Stock>
             .IsRequired()
             .HasDefaultValue(string.Empty)
             .HasComment("특이사항");
+
+        builder.HasIndex(s => s.Name)
+            .IsUnique();
+        
+        builder.HasIndex(s => s.StockCode)
+            .IsUnique();
     }
 }

@@ -7,12 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="12.3.0" />
-      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.6" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Events\MenuRoleEvent\" />
+      <ProjectReference Include="..\AutoTrading.Application\AutoTrading.Application.csproj" />
+      <ProjectReference Include="..\AutoTrading.Shared\AutoTrading.Shared.csproj" />
     </ItemGroup>
 
 </Project>

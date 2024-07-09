@@ -32,13 +32,14 @@ public class JwtService : IJwtService
     public async Task<AuthResult> GenerateAccessTokenAsync(User user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
         var roles = await _context.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToArrayAsync();
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
+                //new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Role, string.Join(",", roles)),
@@ -51,18 +52,16 @@ public class JwtService : IJwtService
             SigningCredentials = credentials
         };
         var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-        var token = jwtSecurityTokenHandler.CreateToken(tokenDescriptor);
+        var token = jwtSecurityTokenHandler.CreateToken(tokenDescriptor);;
         var jwtToken = jwtSecurityTokenHandler.WriteToken(token);
-
-        var refreshToken = await GenerateRefreshTokenAsync(jwtToken);
-
+        var refreshToken = await GenerateRefreshTokenAsync(user.Id, jwtToken);
         return new AuthResult(true, jwtToken, refreshToken);
     }
 
-    private async Task<string> GenerateRefreshTokenAsync(string jwtToken)
+    private async Task<string> GenerateRefreshTokenAsync(long userId, string jwtToken)
     {
         var refreshToken = jwtToken.Sha256Hash();
-        await _cacheService.SetAsync(jwtToken, refreshToken);
+        await _cacheService.SetAsync(userId.ToString(), refreshToken);
         return refreshToken;
     }
 }

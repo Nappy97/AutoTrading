@@ -63,23 +63,4 @@ public static class DependencyInjection
 
         return services;
     }
-
-    public static IServiceCollection AddAuthentication(this IServiceCollection services, Jwt jwt)
-    {
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateActor = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwt.Issuer,
-                ValidAudience = jwt.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key))
-            };
-        });
-
-        return services;
-    }
 }

@@ -58,6 +58,40 @@ public partial class Testing
     {
         return 1L;
     }
+    
+    public static async Task<long> RunAsUserAsync(string userName, string password, string[] roles)
+    {
+        using var scope = _scopeFactory.CreateScope();
+
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+        var user = new User { UserName = userName, Name = userName };
+
+        var result = await userManager.CreateAsync(user, password);
+
+        if (roles.Any())
+        {
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            foreach (var role in roles)
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
+
+            await userManager.AddToRolesAsync(user, roles);
+        }
+
+        if (result.Succeeded)
+        {
+            _userId = user.Id;
+
+            return _userId;
+        }
+
+        var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
+
+        throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
+    }
 
     public static async Task ResetState()
     {
