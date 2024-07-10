@@ -33,7 +33,17 @@ public class JwtService : IJwtService
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-        var roles = await _context.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToArrayAsync();
+        var result = await _context.UserRoles
+            .Where(userRole => userRole.UserId == user.Id)
+            .Join(_context.ActionRoles,
+                userRole => userRole.RoleId,
+                actionRole => actionRole.RoleId,
+                (userRole, actionRole) => new
+                {
+                    RoleId = userRole.RoleId,
+                    ActionId = actionRole.ActionId
+                })
+            .ToListAsync();
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -42,7 +52,8 @@ public class JwtService : IJwtService
                 //new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(ClaimTypes.Role, string.Join(",", roles)),
+                new Claim(ClaimTypes.Role, string.Join(", ", result.Select(r => $"{r.RoleId}"))),
+                new Claim(ClaimTypes.System, string.Join(",", result.Select(r => $"{r.ActionId}"))),
                 new Claim(JwtRegisteredClaimNames.Iat,
                     DateTime.Now.ToUniversalTime().ToString(NappyCultureInfo.Default.DateTimeFormat))
             }),

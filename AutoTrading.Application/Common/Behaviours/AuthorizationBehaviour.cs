@@ -10,12 +10,10 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
     where TRequest : notnull
 {
     private readonly IUser _user;
-    private readonly IIdentityService _identityService;
 
-    public AuthorizationBehaviour(IUser user, IIdentityService identityService)
+    public AuthorizationBehaviour(IUser user)
     {
         _user = user;
-        _identityService = identityService;
     }
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
@@ -23,14 +21,15 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
     {
         var authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
 
-        if (authorizeAttributes.Any())
+        var attributes = authorizeAttributes as AuthorizeAttribute[] ?? authorizeAttributes.ToArray();
+        if (attributes.Any())
         {
             // Must be authenticated user
             if (_user.Id is not 0)
                 throw new UnauthorizedAccessException();
 
             // Role-based authorization
-            var authorizeAttributesWithRoles = authorizeAttributes.Where(a => a.Roles is not []);
+            var authorizeAttributesWithRoles = attributes.Where(a => a.Roles is not []);
 
             if (authorizeAttributesWithRoles.Any())
             {
@@ -40,7 +39,7 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
                 {
                     foreach (var role in roles)
                     {
-                        var isInRole = await _identityService.IsInRoleAsync(_user.Id, role);
+                        var isInRole = _user.Roles.Any(x => x.Equals(role));
                         if (isInRole)
                         {
                             authorized = true;
@@ -56,21 +55,16 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
                 }
             }
 
-            // Policy-based authorization
-            // TODO policy 는 추가예정
-            // var authorizeAttributesWithPolicies = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
-            // if (authorizeAttributesWithPolicies.Any())
-            // {
-            //     foreach (var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
-            //     {
-            //         var authorized = await _identityService.AuthorizeAsync(_user.Id, policy);
-            //
-            //         if (!authorized)
-            //         {
-            //             throw new ForbiddenAccessException();
-            //         }
-            //     }
-            // }
+            // Action(policies)-based authorization
+            var authorizeAttributesWithPolicies = attributes.Where(a => a.Actions is not []);
+            var attributesWithPolicies = authorizeAttributesWithPolicies as AuthorizeAttribute[] ?? authorizeAttributesWithPolicies.ToArray();
+            if (attributesWithPolicies.Any())
+            {
+                if (attributesWithPolicies.Select(a => a.Actions).Any(actions => actions.Select(action => _user.Actions.Any(x => x.Equals(action))).Any(isInActionRole => !isInActionRole)))
+                {
+                    throw new ForbiddenAccessException();
+                }
+            }
         }
 
         // User is authorized / authorization not required

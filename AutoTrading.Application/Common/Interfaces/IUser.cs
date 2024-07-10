@@ -9,4 +9,6 @@ public interface IUser
     string Name { get; }
     
     long[] Roles { get; }
+    
+    long[] Actions { get; }
 }

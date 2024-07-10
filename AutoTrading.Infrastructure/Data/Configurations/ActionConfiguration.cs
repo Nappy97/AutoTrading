@@ -8,6 +8,11 @@ public class ActionConfiguration : IEntityTypeConfiguration<Action>
 {
     public void Configure(EntityTypeBuilder<Action> builder)
     {
+        builder.HasKey(a => a.Id);
+
+        builder.Property(a => a.Id)
+            .ValueGeneratedNever();
+
         builder.Property(a => a.Name)
             .HasMaxLength(50)
             .IsRequired();

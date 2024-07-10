@@ -12,46 +12,45 @@ public class IdentityService : IIdentityService
     private readonly IUserClaimsPrincipalFactory<User> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
 
-    public IdentityService(UserManager<User> userManager,IUserClaimsPrincipalFactory<User> userClaimsPrincipalFactory, IAuthorizationService authorizationService)
+    public IdentityService(UserManager<User> userManager, IUserClaimsPrincipalFactory<User> userClaimsPrincipalFactory,
+        IAuthorizationService authorizationService)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
     }
-    
+
     public async Task<string?> GetUserNameAsync(long userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
-        return user?.Name;
+
+        return user?.UserName;
     }
 
-    public Task<User?> GetUserBydIdAsync(long userId)
+    public async Task<(Result Result, long UserId)> CreateUserAsync(string userName, string password)
     {
-        throw new NotImplementedException();
+        var user = new User
+        {
+            UserName = userName,
+            Email = userName
+        };
+
+        var result = await _userManager.CreateAsync(user, password);
+
+        return (result.ToApplicationResult(), user.Id);
     }
 
-    public Task<User?> GetUserByUserNameAsync(string userName)
+    public async Task<Result> DeleteUserAsync(long userId)
     {
-        throw new NotImplementedException();
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+
+        return user != null ? await DeleteUserAsync(user) : Result.Success();
     }
 
-    public Task<bool> IsInRoleAsync(long userId, long roleId)
+    private async Task<Result> DeleteUserAsync(User user)
     {
-        throw new NotImplementedException();
-    }
+        var result = await _userManager.DeleteAsync(user);
 
-    public Task<bool> AuthorizeAsync(long userId, string policyName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<(Result Result, long UserId)> CreateUserAsync(string userName, string password)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result> DeleteUserAsync(string userId)
-    {
-        throw new NotImplementedException();
+        return result.ToApplicationResult();
     }
 }

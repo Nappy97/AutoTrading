@@ -1,10 +1,12 @@
 ﻿using AutoTrading.Api.Endpoints;
 using AutoTrading.Domain.Entities;
 using AutoTrading.Infrastructure.Data;
+using AutoTrading.Infrastructure.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Role = AutoTrading.Shared.Generated.Role;
 
 namespace Application.FunctionalTests;
 
@@ -51,15 +53,15 @@ public partial class Testing
 
     public static async Task<long> RunAsDefaultUserAsync()
     {
-        return 2L;
+        return await RunAsUserAsync("test@local", "Testing1234!", [Role.일반사용자_3]);
     }
 
     public static async Task<long> RunAsAdministratorAsync()
     {
-        return 1L;
+        return await RunAsUserAsync("administrator@local", "Administrator1234!", [Role.관리자_1]);
     }
-    
-    public static async Task<long> RunAsUserAsync(string userName, string password, string[] roles)
+
+    public static async Task<long> RunAsUserAsync(string userName, string password, long[] roles)
     {
         using var scope = _scopeFactory.CreateScope();
 
@@ -68,23 +70,22 @@ public partial class Testing
         var user = new User { UserName = userName, Name = userName };
 
         var result = await userManager.CreateAsync(user, password);
-
+        
         if (roles.Any())
         {
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             foreach (var role in roles)
             {
-                await roleManager.CreateAsync(new IdentityRole(role));
+                await roleManager.CreateAsync(new IdentityRole(role.ToString()));
             }
 
-            await userManager.AddToRolesAsync(user, roles);
+            await userManager.AddToRolesAsync(user, roles.Select(x => x.ToString()).ToArray());
         }
 
         if (result.Succeeded)
         {
             _userId = user.Id;
-
             return _userId;
         }
 

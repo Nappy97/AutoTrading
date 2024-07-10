@@ -13,8 +13,9 @@ public class InitializerRoles : ITool
 
         var rolesEntities = new List<Role>
         {
-            new() { Name = "관리자" },
-            new() { Name = "유료사용자A" }
+            new() { Id = 1, Name = "관리자" },
+            new() { Id = 2, Name = "유료사용자A" },
+            new() { Id = 3, Name = "일반사용자" }
         };
 
         _context.Roles.AddRange(rolesEntities);

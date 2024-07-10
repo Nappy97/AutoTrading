@@ -16,5 +16,5 @@ public class AuthorizeAttribute : Attribute
     /// <summary>
     /// Gets or sets the policy name that determines access to the resource.
     /// </summary>
-    //public string Policy { get; set; } = string.Empty;
+    public long[] Actions { get; set; } = [];
 }
