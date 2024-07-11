@@ -21,15 +21,14 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
     {
         var authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
 
-        var attributes = authorizeAttributes as AuthorizeAttribute[] ?? authorizeAttributes.ToArray();
-        if (attributes.Any())
+        if (authorizeAttributes.Any())
         {
             // Must be authenticated user
             if (_user.Id is not 0)
                 throw new UnauthorizedAccessException();
 
             // Role-based authorization
-            var authorizeAttributesWithRoles = attributes.Where(a => a.Roles is not []);
+            var authorizeAttributesWithRoles = authorizeAttributes.Where(a => a.Roles is not []);
 
             if (authorizeAttributesWithRoles.Any())
             {
@@ -37,33 +36,23 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
 
                 foreach (var roles in authorizeAttributesWithRoles.Select(a => a.Roles))
                 {
-                    foreach (var role in roles)
-                    {
-                        var isInRole = _user.Roles.Any(x => x.Equals(role));
-                        if (isInRole)
-                        {
-                            authorized = true;
-                            break;
-                        }
-                    }
+                    if (roles.Select(role => _user.Roles.Any(x => x.Equals(role))).Any(isInRole => isInRole))
+                        authorized = true;
                 }
 
                 // Must be a member of at least one role in roles
                 if (!authorized)
-                {
                     throw new ForbiddenAccessException();
-                }
             }
 
             // Action(policies)-based authorization
-            var authorizeAttributesWithPolicies = attributes.Where(a => a.Actions is not []);
-            var attributesWithPolicies = authorizeAttributesWithPolicies as AuthorizeAttribute[] ?? authorizeAttributesWithPolicies.ToArray();
-            if (attributesWithPolicies.Any())
+            var authorizeAttributesWithPolicies = authorizeAttributes.Where(a => a.Actions is not []);
+            if (authorizeAttributesWithPolicies.Any())
             {
-                if (attributesWithPolicies.Select(a => a.Actions).Any(actions => actions.Select(action => _user.Actions.Any(x => x.Equals(action))).Any(isInActionRole => !isInActionRole)))
-                {
+                if (authorizeAttributesWithPolicies.Select(a => a.Actions).Any(actions =>
+                        actions.Select(action => _user.Actions.Any(x => x.Equals(action)))
+                            .Any(isInActionRole => !isInActionRole)))
                     throw new ForbiddenAccessException();
-                }
             }
         }
 
